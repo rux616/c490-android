@@ -1,0 +1,89 @@
+import java.awt.BorderLayout;
+import java.awt.GridLayout;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
+
+public class GameView extends JFrame
+{
+    private JLabel statusLabel;
+    private JButton[][] board;
+    private JLabel winningConditionsLabel;
+    private JButton resetButton = new JButton("Reset");
+    
+    public GameView(int numRows, int numColumns)
+    {
+        // General window options and layout.
+        super("Tic Tac Toe");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setSize(numColumns * 50, (numRows + 1) * 50);
+        setResizable(false);
+        setLayout(new BorderLayout());
+        
+        // Create and add the game status label.
+        (statusLabel = new JLabel()).setHorizontalAlignment(SwingConstants.CENTER);
+        add(statusLabel, BorderLayout.NORTH);
+        
+        // Create and add the buttons for the board.
+        JPanel temp = new JPanel(new GridLayout(numRows, numColumns));
+        board = new JButton[numRows][numColumns];
+        for (int row = 0; row < numRows; row++)
+            for (int column = 0; column < numColumns; column++)
+            {
+                board[row][column] = new JButton();
+                board[row][column].setActionCommand("" + (row * numColumns + column));
+                temp.add(board[row][column]);
+            }
+        add(temp, BorderLayout.CENTER);
+        
+        // Create and add a label detailing the winning conditions and a reset button.
+        temp = new JPanel(new GridLayout(2,1));
+        (winningConditionsLabel = new JLabel()).setHorizontalAlignment(SwingConstants.CENTER);
+        temp.add(winningConditionsLabel);
+        temp.add(resetButton);
+        add(temp, BorderLayout.SOUTH);
+        
+        reset();
+    }
+    
+    public void setBoardButtonText(int row, int column, String text)
+    {
+        board[row][column].setText(text);
+    }
+    
+    public void setWinningConditionsLabelText(String text)
+    {
+        winningConditionsLabel.setText(text);
+    }
+
+    public void setStatusLabelText(String text)
+    {
+        statusLabel.setText(text);
+    }
+    
+    public void addBoardButtonActionListener(ActionListener listener)
+    {
+        for (JButton[] buttonRow : board)
+            for (JButton button : buttonRow)
+                button.addActionListener(listener);
+    }
+    
+    public void addResetButtonActionListener(ActionListener listener)
+    {
+        resetButton.addActionListener(listener);
+    }
+    
+    public void reset()
+    {
+        //gameTypeLabel.setText("type");
+        statusLabel.setText(" ");
+        
+        for (JButton[] buttonRow : board)
+            for (JButton button : buttonRow)
+                button.setText(" ");
+    }
+}

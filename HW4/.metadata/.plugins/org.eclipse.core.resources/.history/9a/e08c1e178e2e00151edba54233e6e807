@@ -1,0 +1,74 @@
+import static java.nio.file.StandardOpenOption.CREATE_NEW;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Random;
+import java.util.StringTokenizer;
+
+public class BlankTrimmer
+{
+    public static void trim(String filePath) throws IOException, NoSuchFileException
+    {
+        String tempFilePrefix = "ZZZBlankTrimmer";
+        String tempFilePostfix = ".tmp";
+        int maxRandomChars = 16;
+        
+        Path mainFile;
+        Path tempFile;
+        
+        // Check main file.
+        mainFile = Paths.get(filePath);
+        if (Files.notExists(mainFile))
+            throw new NoSuchFileException(mainFile.toString());
+        mainFile = mainFile.toRealPath();
+        
+        // Generate and check temp file name.
+        do
+        {
+            Random generator = new Random();
+            String randomFileName = "";
+            for (int charNum = 1; charNum <= maxRandomChars; charNum++)
+                randomFileName += (char)(generator.nextInt(26) + 'A');
+            tempFile = Paths.get(mainFile.getParent().toString(),
+                    tempFilePrefix + randomFileName + tempFilePostfix);
+        } while (Files.exists(tempFile));
+        
+        BufferedReader reader = null;
+        BufferedWriter writer = null;
+        try
+        {
+            // Open main file.
+            // Open temp file.
+            Charset charset = Charset.forName("UTF-8");
+            reader = Files.newBufferedReader(mainFile, charset);
+            writer = Files.newBufferedWriter(tempFile, charset, CREATE_NEW);
+            
+            // Copy text from main file to temp file, trimming blanks along the way.
+            String line;
+            while ((line = reader.readLine()) != null)
+            {
+                StringTokenizer st = new StringTokenizer(line, " ");
+                
+                while (st.hasMoreTokens())
+                    writer.append(st.nextToken()).append((st.hasMoreTokens() ? " " : "\n"));
+            }
+        }
+        finally
+        {
+            // Close main file.
+            // Close temp file.
+            reader.close();
+            writer.close();
+        }
+        
+        
+        // Delete main file.
+        // Rename temp file to main file.
+    }
+}

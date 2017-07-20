@@ -1,0 +1,155 @@
+public class Game
+{
+    public static enum Mark
+    {
+        X,
+        O
+    }
+    
+    public static enum Status
+    {
+        IN_PROGRESS,
+        X_WIN,
+        O_WIN,
+        TIE
+    }
+    
+    private static final int NUM_ROWS = 3;
+    private static final int NUM_COLS = 3;
+    private static final int NUM_TURNS = NUM_ROWS * NUM_COLS;
+    
+    private Mark[][] board;
+    private Mark turn;
+    private Status status;
+    private int turns;
+    
+    public Game()
+    {
+        reset();
+    }
+    
+    // BEGIN GETTERS AND SETTERS -->
+    public static int getRows()
+    {
+        return NUM_ROWS;
+    }
+    
+    public static int getColumns()
+    {
+        return NUM_COLS;
+    }
+    
+    public Mark getTurn()
+    {
+        return turn;
+    }
+    
+    public Status getStatus()
+    {
+        return status;
+    }
+    
+    public String[][] getWholeBoard()
+    {
+        String[][] toReturn = new String[NUM_ROWS][NUM_COLS];
+        
+        for (int row = 0; row < NUM_ROWS; row++)
+            for (int column = 0; column < NUM_COLS; column++)
+                toReturn[row][column] = (board[row][column] == Mark.X ? "X" : "O");
+        
+        return toReturn;
+    }
+    
+    public Mark[][] getBoard()
+    {
+        Mark[][] toReturn = new Mark[NUM_ROWS][NUM_COLS];
+        
+        for (int row = 0; row < NUM_ROWS; row++)
+            for (int column = 0; column < NUM_COLS; column++)
+                toReturn[row][column] = board[row][column];
+        
+        return toReturn;
+    }
+    
+    public Mark getBoard(byte row, byte column) throws IndexOutOfBoundsException
+    {
+        return board[row][column];
+    }
+    // <-- END GETTERS AND SETTERS
+    
+    // Method to help debug logic.
+    public void printBoard()
+    {
+        for (int row = 0; row < NUM_ROWS; row++)
+        {
+            for (int column = 0; column < NUM_COLS; column++)
+                if (board[row][column] == null)
+                    System.out.print("-");
+                else
+                    System.out.print(board[row][column] == Mark.X ? "X" : "O");
+            System.out.println();
+        }
+        System.out.println();
+    }
+    
+    /**
+     * Play a single move at the given game board coordinates.
+     * 
+     * @param row The row where the mark should be placed.
+     * @param column The column where the mark should be placed.
+     */
+    public void playMove(int row, int column)
+    {
+        // If the game is not in progress, no more moves are accepted.
+        if (status != Status.IN_PROGRESS)
+            return;
+        
+        // Verify the row and column values.
+        if (row < 0 || row >= NUM_ROWS || column < 0 || column >= NUM_COLS)
+            return;
+        
+        // Verify that the destination is blank.
+        if (board[row][column] == null)
+        {
+            turns++;
+            board[row][column] = turn;
+            
+            checkBoard();
+
+            turn = (turn == Mark.X ? Mark.O : Mark.X);
+        }
+    }
+    
+    /**
+     * Checks the game board to see if there is a winner or if there is a tie.
+     */
+    private void checkBoard()
+    {
+        // Check possible winning combinations. Compare with the current turn as this method is
+        // called after every move.
+        if (    (board[0][0] == turn && board[0][1] == turn && board[0][2] == turn) ||
+                (board[1][0] == turn && board[1][1] == turn && board[1][2] == turn) ||
+                (board[2][0] == turn && board[2][1] == turn && board[2][2] == turn) ||
+                (board[0][0] == turn && board[1][0] == turn && board[2][0] == turn) ||
+                (board[0][1] == turn && board[1][1] == turn && board[2][1] == turn) ||
+                (board[0][2] == turn && board[1][2] == turn && board[2][2] == turn) ||
+                (board[0][0] == turn && board[1][1] == turn && board[2][2] == turn) ||
+                (board[2][0] == turn && board[1][1] == turn && board[0][2] == turn))
+            status = (turn == Mark.X ? Status.X_WIN : Status.O_WIN);
+        // Check for a tie.
+        else if (turns == NUM_TURNS)
+            status = Status.TIE;
+    }
+    
+    /**
+     * Discards the old game board and creates a new one in its place and sets the turn to X, the
+     * game status to undecided, and the number of turns played to 0.
+     */
+    public void reset()
+    {
+        board = new Mark[NUM_ROWS][NUM_COLS];
+        turn = Mark.X;
+        status = Status.IN_PROGRESS;
+        turns = 0;
+    }
+}

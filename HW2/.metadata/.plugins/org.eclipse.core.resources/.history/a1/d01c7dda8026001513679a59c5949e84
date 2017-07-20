@@ -1,0 +1,163 @@
+/*--------------------------------------------------------------------------------------------------
+ * Author:      Dan Cassidy
+ * Date:        2015-07-09
+ * Assignment:  HW2-Project
+ * Source File: Administrator.java
+ * Language:    Java
+ * Course:      CSCI-C 490, Android Programming, MoWe 08:00
+--------------------------------------------------------------------------------------------------*/
+import java.util.Scanner;
+
+/**
+ * 
+ * @author Dan Cassidy
+ *
+ */
+public class Administrator extends SalariedEmployee
+{
+	private String title = "No Title";
+	private String area = "No Area";
+	private String supervisorsName = "No Supervisor";
+	
+	/**
+	 * 
+	 */
+	public Administrator()
+	{
+		// Nothing to do, defaults are set already.
+	}
+	
+	/**
+	 * 
+	 * @param theName
+	 * @param theDate
+	 * @param theSalary
+	 * @param title
+	 * @param area
+	 * @param supervisorsName
+	 */
+	public Administrator(String theName, Date theDate, double theSalary, String title,
+			String area, String supervisorsName)
+	{
+		super(theName, theDate, theSalary);
+		this.setTitle(title);
+		this.setArea(area);
+		this.setSupervisorsName(supervisorsName);
+	}
+	
+	/**
+	 * 
+	 * @param originalObject
+	 */
+	public Administrator(Administrator originalObject)
+	{
+		super(originalObject);
+		this.setTitle(originalObject.getTitle());
+		this.setArea(originalObject.getArea());
+		this.setSupervisorsName(originalObject.getSupervisorsName());
+	}
+	
+	// BEGIN GETTERS AND SETTERS -->
+	public String getArea()
+	{
+		return this.area;
+	}
+	
+	public void setArea(String area)
+	{
+		if (area == null)
+			throw new NullPointerException();
+		else
+			this.area = area;
+	}
+	
+	public String getSupervisorsName()
+	{
+		return this.supervisorsName;
+	}
+	
+	public void setSupervisorsName(String supervisorsName)
+	{
+		if (supervisorsName == null)
+			throw new NullPointerException();
+		else
+			this.supervisorsName = supervisorsName;
+	}
+	
+	public String getTitle()
+	{
+		return this.title;
+	}
+	
+	public void setTitle(String title)
+	{
+		if (title == null)
+			throw new NullPointerException();
+		else
+			this.title = title;
+	}
+	// <-- END GETTERS AND SETTERS
+	
+	/**
+	 * 
+	 * @param other
+	 * @return
+	 */
+	public boolean equals(Administrator other)
+	{
+		if (other == null)
+			throw new NullPointerException();
+		else
+			return (super.equals(other) &&
+					this.getArea().equals(other.getArea()) &&
+					this.getSupervisorsName().equals(other.getSupervisorsName()) &&
+					this.getTitle().equals(other.getTitle()));
+	}
+	
+	/**
+	 * 
+	 */
+	public String toString()
+	{
+		return (super.toString() + "\n" +
+				this.getTitle() + " of " + this.getArea() + "\n" +
+				"Supervised by " + this.getSupervisorsName());
+	}
+	
+	/**
+	 * 
+	 */
+	public void readAdminInfo()
+	{
+		boolean valid = false;
+		Scanner keyboardInput = new Scanner(System.in);
+		
+		// 
+		while (!valid)
+		{
+			try
+			{
+				System.out.println("Employee's Name:");
+				this.setName(keyboardInput.nextLine());
+				System.out.println("Employee's Date of Hire:");
+				Date tempDate = new Date();
+				tempDate.readInput();
+				this.setHireDate(tempDate);
+				System.out.println("Employee's Yearly Salary:");
+				this.setSalary(Double.parseDouble(keyboardInput.nextLine()));
+				System.out.println("Employee's Title:");
+				this.setTitle(keyboardInput.nextLine());
+				System.out.println("Employee's Area of Responsibility:");
+				this.setArea(keyboardInput.nextLine());
+				System.out.println("Employee's Supervisor:");
+				this.setSupervisorsName(keyboardInput.nextLine());
+				valid = true;
+			}
+			catch (Exception ex)
+			{
+				System.out.println("ERROR!");
+				System.out.println(ex.getMessage());
+			}
+		}
+	}
+}

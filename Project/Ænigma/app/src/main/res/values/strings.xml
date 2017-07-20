@@ -1,0 +1,97 @@
+<resources>
+    <!-- App Name -->
+    <string name="app_name">Ænigma</string>
+
+    <!-- Activity Names -->
+    <string name="title_activity_settings">Machine Settings</string>
+
+    <!-- Input/Output Labels -->
+    <string name="input_label">Input</string>
+    <string name="output_label">Output</string>
+
+    <!-- Button Labels -->
+    <string name="button_a" translatable="false">A</string>
+    <string name="button_b" translatable="false">B</string>
+    <string name="button_c" translatable="false">C</string>
+    <string name="button_d" translatable="false">D</string>
+    <string name="button_e" translatable="false">E</string>
+    <string name="button_f" translatable="false">F</string>
+    <string name="button_g" translatable="false">G</string>
+    <string name="button_h" translatable="false">H</string>
+    <string name="button_i" translatable="false">I</string>
+    <string name="button_j" translatable="false">J</string>
+    <string name="button_k" translatable="false">K</string>
+    <string name="button_l" translatable="false">L</string>
+    <string name="button_m" translatable="false">M</string>
+    <string name="button_n" translatable="false">N</string>
+    <string name="button_o" translatable="false">O</string>
+    <string name="button_p" translatable="false">P</string>
+    <string name="button_q" translatable="false">Q</string>
+    <string name="button_r" translatable="false">R</string>
+    <string name="button_s" translatable="false">S</string>
+    <string name="button_t" translatable="false">T</string>
+    <string name="button_u" translatable="false">U</string>
+    <string name="button_v" translatable="false">V</string>
+    <string name="button_w" translatable="false">W</string>
+    <string name="button_x" translatable="false">X</string>
+    <string name="button_y" translatable="false">Y</string>
+    <string name="button_z" translatable="false">Z</string>
+
+    <!-- Action Menus -->
+    <!-- Main -->
+    <string name="action_clear">Clear</string>
+    <string name="action_paste_input">Paste Input</string>
+    <string name="action_copy_output">Copy Output</string>
+    <!-- Settings -->
+    <string name="action_reset">Reset</string>
+    <!-- Common -->
+    <string name="action_help">Help</string>
+    <string name="action_about">About</string>
+
+    <!-- Settings -->
+    <string name="settings_machine_type_label">Machine Type</string>
+    <string name="settings_reflector_type_label">Reflector</string>
+    <string name="settings_greek_rotor_type_label">Greek</string>
+    <string name="settings_left_rotor_type_label">Left</string>
+    <string name="settings_middle_rotor_type_label">Middle</string>
+    <string name="settings_right_rotor_type_label">Right</string>
+    <string name="settings_ring_setting_label">Ring</string>
+    <string name="settings_position_label">Position</string>
+    <string name="settings_plugboard_pairs_label">Plugboard Pairs</string>
+    <string name="settings_rotor_selection_label">Rotors</string>
+    <string name="settings_plugboard_pairs_hint">AK EF DV, etc.</string>
+
+    <!-- Clipboard Clip Name -->
+    <string name="clipboard_copy_label">aenigma output text</string>
+
+    <!-- Alphanumeric Rotor List -->
+    <string-array name="rotor_alphanumeric">
+        <item>A/01</item>
+        <item>B/02</item>
+        <item>C/03</item>
+        <item>D/04</item>
+        <item>E/05</item>
+        <item>F/06</item>
+        <item>G/07</item>
+        <item>H/08</item>
+        <item>I/09</item>
+        <item>J/10</item>
+        <item>K/11</item>
+        <item>L/12</item>
+        <item>M/13</item>
+        <item>N/14</item>
+        <item>O/15</item>
+        <item>P/16</item>
+        <item>Q/17</item>
+        <item>R/18</item>
+        <item>S/19</item>
+        <item>T/20</item>
+        <item>U/21</item>
+        <item>V/22</item>
+        <item>W/23</item>
+        <item>X/24</item>
+        <item>Y/25</item>
+        <item>Z/26</item>
+    </string-array>
+
+</resources>

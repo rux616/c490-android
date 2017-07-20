@@ -1,0 +1,69 @@
+package dc.c490.hw2_project;
+
+public class Administrator extends SalariedEmployee
+{
+	private String title = "None";
+	private String areaOfResponsibility = "None";
+	private String immediateSupervisor = "None";
+	
+	public Administrator()
+	{
+		// Nothing to do, defaults are set already.
+	}
+	
+	public Administrator(String theName, Date theDate, double theSalary, String title,
+			String areaOfResponsibility, String immediateSupervisor) throws Exception
+	{
+		super(theName, theDate, theSalary);
+		this.setTitle(title);
+		this.setAreaOfResponsbility(areaOfResponsibility);
+		this.setImmediateSupervisor(immediateSupervisor);
+	}
+	
+	public Administrator(Administrator originalObject) throws Exception
+	{
+		super(originalObject);
+		this.setTitle(originalObject.getTitle());
+		this.setAreaOfResponsibility(originalObject.getAreaOfResponsibility());
+		this.setImmediateSupervisor(originalObject.getImmediateSupervisor());
+	}
+	
+	public String getAreaOfResponsibility()
+	{
+		return this.areaOfResponsibility;
+	}
+	
+	public void setAreaOfResponsibility(String areaOfResponsibility)
+	{
+		if (areaOfResponsibility != null)
+			this.areaOfResponsibility = areaOfResponsibility;
+		else
+			throw new NullPointerException();
+	}
+	
+	public String getImmediateSupervisor()
+	{
+		return this.immediateSupervisor;
+	}
+	
+	public void setImmediateSupervisor(String immediateSupervisor)
+	{
+		if (immediateSupervisor != null)
+			this.immediateSupervisor = immediateSupervisor;
+		else
+			throw new NullPointerException();
+	}
+	
+	public String getTitle()
+	{
+		return this.title;
+	}
+	
+	public void setTitle(String title)
+	{
+		if (title != null)
+			this.title = title;
+		else
+			throw new NullPointerException();
+	}
+}

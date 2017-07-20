@@ -1,0 +1,255 @@
+public class Game
+{
+    public static enum Mark
+    {
+        X,
+        O
+    }
+    
+    public static enum Status
+    {
+        IN_PROGRESS,
+        X_WIN,
+        O_WIN,
+        DRAW
+    }
+    
+    private static final int DEFAULT_NUM_ROWS = 3;
+    private static final int DEFAULT_NUM_COLUMNS = 3;
+    private static final int DEFAULT_WIN_LENGTH = 3;
+    
+    private final int NUM_ROWS;
+    private final int NUM_COLUMNS;
+    private final int WIN_LENGTH;
+    private final int MAX_SPACES;
+    
+    private Mark[][] board;
+    private Mark turn;
+    private Status status;
+    private int usedSpaces;
+    
+    public Game()
+    {
+        this(DEFAULT_NUM_ROWS, DEFAULT_NUM_COLUMNS, DEFAULT_WIN_LENGTH);
+    }
+    
+    public Game(int rows, int columns, int winLength)
+    {
+        NUM_ROWS = (rows < DEFAULT_NUM_ROWS ? DEFAULT_NUM_ROWS : rows);
+        NUM_COLUMNS = (columns < DEFAULT_NUM_COLUMNS ? DEFAULT_NUM_COLUMNS : columns);
+        MAX_SPACES = NUM_ROWS * NUM_COLUMNS;
+        if (    winLength < DEFAULT_WIN_LENGTH || 
+                winLength > (NUM_ROWS > NUM_COLUMNS ? NUM_COLUMNS : NUM_ROWS))
+            WIN_LENGTH = DEFAULT_WIN_LENGTH;
+        else
+            WIN_LENGTH = winLength;
+        reset();
+    }
+    
+    // BEGIN GETTERS AND SETTERS -->
+    public int getRows()
+    {
+        return NUM_ROWS;
+    }
+    
+    public int getColumns()
+    {
+        return NUM_COLUMNS;
+    }
+    
+    public Mark getTurn()
+    {
+        return turn;
+    }
+    
+    public Status getStatus()
+    {
+        return status;
+    }
+    
+    public String[][] getWholeBoard()
+    {
+        String[][] toReturn = new String[NUM_ROWS][NUM_COLUMNS];
+        
+        for (int row = 0; row < NUM_ROWS; row++)
+            for (int column = 0; column < NUM_COLUMNS; column++)
+                toReturn[row][column] = (board[row][column] == Mark.X ? "X" : "O");
+        
+        return toReturn;
+    }
+    
+    public Mark[][] getBoard()
+    {
+        Mark[][] toReturn = new Mark[NUM_ROWS][NUM_COLUMNS];
+        
+        for (int row = 0; row < NUM_ROWS; row++)
+            for (int column = 0; column < NUM_COLUMNS; column++)
+                toReturn[row][column] = board[row][column];
+        
+        return toReturn;
+    }
+    
+    public Mark getSpace(byte row, byte column) throws IndexOutOfBoundsException
+    {
+        return board[row][column];
+    }
+    // <-- END GETTERS AND SETTERS
+    
+    // Method to help debug logic.
+    public void printBoard()
+    {
+        for (int row = 0; row < NUM_ROWS; row++)
+        {
+            for (int column = 0; column < NUM_COLUMNS; column++)
+                if (board[row][column] == null)
+                    System.out.print("-");
+                else
+                    System.out.print(board[row][column] == Mark.X ? "X" : "O");
+            System.out.println();
+        }
+        System.out.println(status);
+        System.out.println();
+    }
+    
+    /**
+     * Play a single move at the given game board coordinates.
+     * 
+     * @param row The row where the mark should be placed.
+     * @param column The column where the mark should be placed.
+     */
+    public void playMove(int row, int column)
+    {
+        // If the game had ended, no more moves are accepted.
+        if (status != Status.IN_PROGRESS)
+            return;
+        
+        // Verify the row and column values.
+        if (row < 0 || row >= NUM_ROWS || column < 0 || column >= NUM_COLUMNS)
+            return;
+        
+        // Verify that the destination is empty.
+        if (board[row][column] == null)
+        {
+            usedSpaces++;
+            board[row][column] = turn;
+            
+            // Can't be a winning move until at least (WIN_LENGTH * 2 - 1) spaces have been used.
+            if (usedSpaces >= WIN_LENGTH * 2 - 1)
+                checkBoard();
+
+            turn = (turn == Mark.X ? Mark.O : Mark.X);
+        }
+    }
+    
+    /**
+     * Checks the game board to see if there is a winner or a draw.
+     */
+    private void checkBoard()
+    {
+        // Check possible winning combinations. Compare with the current turn as this method is
+        // called after every move.
+//        if (    (board[0][0] == turn && board[0][1] == turn && board[0][2] == turn) ||
+//                (board[1][0] == turn && board[1][1] == turn && board[1][2] == turn) ||
+//                (board[2][0] == turn && board[2][1] == turn && board[2][2] == turn) ||
+//                (board[0][0] == turn && board[1][0] == turn && board[2][0] == turn) ||
+//                (board[0][1] == turn && board[1][1] == turn && board[2][1] == turn) ||
+//                (board[0][2] == turn && board[1][2] == turn && board[2][2] == turn) ||
+//                (board[0][0] == turn && board[1][1] == turn && board[2][2] == turn) ||
+//                (board[2][0] == turn && board[1][1] == turn && board[0][2] == turn))
+        if (checkWin())
+            status = (turn == Mark.X ? Status.X_WIN : Status.O_WIN);
+        // Check for a draw.
+        else if (usedSpaces == MAX_SPACES)
+            status = Status.DRAW;
+    }
+    
+    /**
+     * Wrapper for the recursive checkWin method.
+     * @return
+     */
+    private boolean checkWin()
+    {
+        boolean win = false;
+        
+        for (int row = 0; !win && row < NUM_ROWS; row++)
+            for (int column = 0; !win && column < NUM_COLUMNS; column++)
+            {
+                //win = checkWin(row, column, 0);
+                win = checkWin(row, column, 0, 1, 0) || checkWin(row, column, 1, 0, 0) ||
+                        checkWin(row, column, 1, 1, 0) || checkWin(row, column, -1, 1, 0);
+            }
+
+        return win;
+    }
+    
+    /**
+     * Recursive method to check for a winning sequence. O(n^4) complexity? BAD.
+     * 
+     * @param row
+     * @param column
+     * @param numSequential
+     * @return
+     */
+    private boolean checkWin(int row, int column, int numSequential)
+    {
+        try
+        {
+            if (board[row][column] != turn)
+                return false;
+            else if (numSequential == WIN_LENGTH - 1)
+                return true;
+        }
+        catch (IndexOutOfBoundsException ex)
+        {
+            return false;
+        }
+        
+        return  checkWin(row, column + 1, numSequential + 1) || 
+                checkWin(row + 1, column, numSequential + 1) ||
+                checkWin(row + 1, column + 1, numSequential + 1) ||
+                checkWin(row - 1, column + 1, numSequential + 1);
+    }
+    
+    // Recursive win checking, but with a 'direction'.
+    private boolean checkWin(int row, int column, int vertDir, int horizDir, int numSequential)
+    {
+        // Perform initial checks. These are to cut down on the recursion that needs to happen.
+        if (numSequential == 0)
+        {
+            // Bounds check. <FINISH>
+            if (    row + vertDir * (WIN_LENGTH - 1) < 0 || 
+                    row + vertDir * (WIN_LENGTH - 1) >= NUM_ROWS ||
+                    column + horizDir * (WIN_LENGTH - 1) < 0 ||
+                    column + horizDir * (WIN_LENGTH - 1) >= NUM_COLUMNS)
+                return false;
+                
+            // Neighbor check.
+            if (board[row + vertDir][column + horizDir] != turn)
+                return false;
+                
+            // Destination check.
+            if (board[row + vertDir * (WIN_LENGTH - 1)][column + horizDir * (WIN_LENGTH - 1)] != 
+                    turn)
+                return false;
+        }
+        
+        if (board[row][column] != turn)
+            return false;
+        else if (numSequential == WIN_LENGTH - 1)
+            return true;
+        
+        return checkWin(row + vertDir, column + horizDir, vertDir, horizDir, numSequential + 1);
+    }
+    
+    /**
+     * Discards the old game board and creates a new one in its place and sets the turn to X, the
+     * game status to undecided, and the number of turns played to 0.
+     */
+    public void reset()
+    {
+        board = new Mark[NUM_ROWS][NUM_COLUMNS];
+        turn = Mark.X;
+        status = Status.IN_PROGRESS;
+        usedSpaces = 0;
+    }
+}

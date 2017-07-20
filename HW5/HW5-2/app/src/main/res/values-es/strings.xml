@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Scrapbook</string>
+
+    <string name="text_arc_de_triomphe_caption">Arco de Triunfo de París</string>
+    <string name="text_athens_acropolis_caption">Atenas Acrópolis</string>
+    <string name="text_giza_pyramids_caption">Pirámides de Giza</string>
+    <string name="text_space_needle_caption">Aguja Espacial de Seattle</string>
+</resources>

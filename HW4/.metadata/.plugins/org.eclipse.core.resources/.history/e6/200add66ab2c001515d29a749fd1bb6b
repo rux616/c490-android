@@ -1,0 +1,19 @@
+
+public class GameController
+{
+    private Game theGame;
+    private GameView theView;
+    
+    public GameController()
+    {
+        theGame = new Game(6, 7, 3);
+        theView = new GameView(theGame.getRows(), theGame.getColumns());
+    }
+    
+    public void showView()
+    {
+        //theView.pack();
+        theView.setVisible(true);
+    }
+
+}

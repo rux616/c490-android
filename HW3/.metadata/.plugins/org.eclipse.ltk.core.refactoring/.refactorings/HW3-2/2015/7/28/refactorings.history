@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename method &apos;CalculateAverage.getNumber(...)&apos; to &apos;readInt&apos;&#x0D;&#x0A;- Original project: &apos;HW3-2&apos;&#x0D;&#x0A;- Original element: &apos;CalculateAverage.getNumber(...)&apos;&#x0D;&#x0A;- Renamed element: &apos;CalculateAverage.readInt(...)&apos;&#x0D;&#x0A;- Update references to refactored element" delegate="false" deprecate="false" description="Rename method &apos;getNumber&apos;" flags="589830" id="org.eclipse.jdt.ui.rename.method" input="/src&lt;{CalculateAverage.java[CalculateAverage~getNumber~QString;" name="readInt" references="true" stamp="1436559781224" version="1.0"/>
+</session>

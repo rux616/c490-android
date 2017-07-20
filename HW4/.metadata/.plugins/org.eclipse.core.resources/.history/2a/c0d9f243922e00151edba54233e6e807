@@ -1,0 +1,87 @@
+/*--------------------------------------------------------------------------------------------------
+ * Author:      Dan Cassidy
+ * Date:        2015-
+ * Assignment:  
+ * Source File: .java
+ * Language:    Java
+ * Course:      CSCI-C 490, Android Programming, MoWe 08:00
+--------------------------------------------------------------------------------------------------*/
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.nio.file.InvalidPathException;
+import java.nio.file.NoSuchFileException;
+
+import javax.swing.JOptionPane;
+
+/**
+ * 
+ * 
+ * @author Dan Cassidy
+ */
+public class BlankTrimmerController
+{
+    BlankTrimmerView theView = new BlankTrimmerView();
+    
+    /**
+     * 
+     */
+    public BlankTrimmerController()
+    {
+        theView.addTrimButtonActionListener(new ActionListener()
+        {
+            public void actionPerformed(ActionEvent event)
+            {
+                String message = "";
+                int messageType = 0;
+                
+                String filePath = theView.getFilePath();
+                
+                try
+                {
+                    BlankTrimmer.trim(filePath);
+                    message = "Blanks trimmed successfully.";
+                    messageType = JOptionPane.INFORMATION_MESSAGE;
+                }
+                catch (InvalidPathException ex)
+                {
+                    message = "Invalid file path.";
+                    messageType = JOptionPane.ERROR_MESSAGE;
+                }
+                catch (NoSuchFileException ex)
+                {
+                    message = "File does not exist.";
+                    messageType = JOptionPane.ERROR_MESSAGE;
+                }
+                catch (SecurityException ex)
+                {
+                    message = "Access denied.";
+                    messageType = JOptionPane.ERROR_MESSAGE;
+                }
+                catch (IOException ex)
+                {
+                    message = "I/O exception.";
+                    messageType = JOptionPane.ERROR_MESSAGE;
+                }
+                catch (Exception ex)
+                {
+                    message = "Unknown error:\n" + ex.getMessage();
+                    messageType = JOptionPane.ERROR_MESSAGE;
+                    ex.printStackTrace();
+                }
+                finally
+                {
+                    theView.showMessage(message, messageType);
+                }
+            }
+        });
+    }
+    
+    /**
+     * 
+     */
+    public void showView()
+    {
+        theView.setVisible(true);
+    }
+}

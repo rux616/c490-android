@@ -1,0 +1,47 @@
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JOptionPane;
+
+public class BlankTrimmerController
+{
+    BlankTrimmer theModel = new BlankTrimmer();
+    BlankTrimmerView theView = new BlankTrimmerView();
+    
+    public BlankTrimmerController()
+    {
+        theView.addTrimButtonActionListener(new ActionListener()
+        {
+            public void actionPerformed(ActionEvent event)
+            {
+                // TODO: Finish action listener.
+                String filePath = theView.getFilePath();
+                
+                try
+                {
+                    BlankTrimmer.trim(filePath);
+                }
+                catch (Exception ex)
+                {
+                    ex.printStackTrace();
+                    System.out.println(ex.getMessage());
+                }
+                
+                // Quick check to see if 
+                if (filePath.isEmpty())
+                {
+                    theView.showMessage("Must have a file to work with.",
+                            JOptionPane.WARNING_MESSAGE);
+                    return;
+                }
+                
+                
+            }
+        });
+    }
+    
+    public void showView()
+    {
+        theView.setVisible(true);
+    }
+}

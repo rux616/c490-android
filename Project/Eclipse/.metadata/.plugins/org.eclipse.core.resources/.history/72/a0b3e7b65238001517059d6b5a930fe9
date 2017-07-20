@@ -1,0 +1,30 @@
+package com.chaoticcognitions.aenigma.views;
+
+import java.util.Scanner;
+
+import com.chaoticcognitions.aenigma.models.rotors.Rotor;
+import com.chaoticcognitions.aenigma.models.rotors.RotorType;
+
+/**
+ * Created by Dan on 2015-07-25.
+ */
+public class MainActivity {
+	public static void main(String[] args) {
+		Rotor testRotor = new Rotor(RotorType.M4_I);
+		
+		Scanner keyboardInput = new Scanner(System.in);
+		char testChar;
+		
+		do {
+		System.out.println("Rotor Type: " + testRotor.getRotorType());
+		System.out.println("Visible Char: " + testRotor.getVisiblePosition());
+		System.out.println("Ring Setting: " + testRotor.getRingSetting());
+		System.out.println();
+		
+		System.out.print("To Encode: ");
+		testChar = keyboardInput.next().charAt(0);
+		if (testChar != '0')
+			System.out.println("Output: " + testRotor.encode(testChar));
+		} while (testChar != '0');
+	}
+}

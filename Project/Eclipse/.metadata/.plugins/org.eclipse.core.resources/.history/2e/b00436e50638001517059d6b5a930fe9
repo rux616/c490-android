@@ -1,0 +1,153 @@
+package com.chaoticcognitions.aenigma.views;
+
+import android.app.Activity;
+import android.content.DialogInterface;
+import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+
+import com.chaoticcognitions.aenigma.R;
+import com.chaoticcognitions.aenigma.models.rotors.Rotor;
+import com.chaoticcognitions.aenigma.presenters.EnigmaPresenter;
+
+/**
+ * Created by Dan on 2015-07-25.
+ */
+public class MainActivity extends Activity {
+    private TextView rotorTextView;
+    private TextView plaintextTextView;
+    private EditText plaintextEditText;
+    private TextView ciphertextTextView;
+    private EditText ciphertextEditText;
+
+    private Button aButton;
+    private Button bButton;
+    private Button cButton;
+    private Button dButton;
+    private Button eButton;
+    private Button fButton;
+    private Button gButton;
+    private Button hButton;
+    private Button iButton;
+    private Button jButton;
+    private Button kButton;
+    private Button lButton;
+    private Button mButton;
+    private Button nButton;
+    private Button oButton;
+    private Button pButton;
+    private Button qButton;
+    private Button rButton;
+    private Button sButton;
+    private Button tButton;
+    private Button uButton;
+    private Button vButton;
+    private Button wButton;
+    private Button xButton;
+    private Button yButton;
+    private Button zButton;
+
+    private Button[] buttons;
+
+    private EnigmaPresenter presenter;
+    private TextView inputFocus;
+
+    @Override protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        rotorTextView = (TextView) findViewById(R.id.rotorTextView);
+        plaintextTextView = (TextView) findViewById(R.id.plaintextTextView);
+        ciphertextTextView = (TextView) findViewById(R.id.ciphertextTextView);
+
+        buttons = new Button[]{
+                aButton = (Button) findViewById(R.id.aButton),
+                bButton = (Button) findViewById(R.id.bButton),
+                cButton = (Button) findViewById(R.id.cButton),
+                dButton = (Button) findViewById(R.id.dButton),
+                eButton = (Button) findViewById(R.id.eButton),
+                fButton = (Button) findViewById(R.id.fButton),
+                gButton = (Button) findViewById(R.id.gButton),
+                hButton = (Button) findViewById(R.id.hButton),
+                iButton = (Button) findViewById(R.id.iButton),
+                jButton = (Button) findViewById(R.id.jButton),
+                kButton = (Button) findViewById(R.id.kButton),
+                lButton = (Button) findViewById(R.id.lButton),
+                mButton = (Button) findViewById(R.id.mButton),
+                nButton = (Button) findViewById(R.id.nButton),
+                oButton = (Button) findViewById(R.id.oButton),
+                pButton = (Button) findViewById(R.id.pButton),
+                qButton = (Button) findViewById(R.id.qButton),
+                rButton = (Button) findViewById(R.id.rButton),
+                sButton = (Button) findViewById(R.id.sButton),
+                tButton = (Button) findViewById(R.id.tButton),
+                uButton = (Button) findViewById(R.id.uButton),
+                vButton = (Button) findViewById(R.id.vButton),
+                wButton = (Button) findViewById(R.id.wButton),
+                xButton = (Button) findViewById(R.id.xButton),
+                yButton = (Button) findViewById(R.id.yButton),
+                zButton = (Button) findViewById(R.id.zButton)};
+
+        presenter = new EnigmaPresenter(this);
+        setInputFocus(plaintextTextView);
+
+        for (Button button : buttons)
+            button.setOnClickListener(buttonListener);
+
+        plaintextTextView.addTextChangedListener(plaintextWatcher);
+        ciphertextTextView.addTextChangedListener(ciphertextWatcher);
+
+        rotorTextView.setText(presenter.getRotorText());
+    }
+
+    public void setInputFocus(View v) {
+        Log.i("info", "setting focus to " + getResources().getResourceName(v.getId()));
+        inputFocus = (TextView) v;
+    }
+
+    private View.OnClickListener buttonListener = new View.OnClickListener() {
+        @Override public void onClick(View v) {
+            Log.i("buttonListener", "button '" + ((Button) v).getText() + "' clicked");
+            inputFocus.append(((Button) v).getText());
+        }
+    };
+
+    private TextWatcher plaintextWatcher = new TextWatcher() {
+        @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+
+        @Override public void onTextChanged(CharSequence s, int start, int before, int count) { }
+
+        @Override public void afterTextChanged(Editable s) {
+            Log.i("plaintextWatcher", "entered afterTextChanged method");
+            Log.i("plaintextWatcher", "contents of s: " + s.toString());
+            Log.i("plaintextWatcher", "length of s: " + s.length());
+            if (inputFocus == plaintextTextView) {
+                ciphertextTextView.append(String.valueOf(presenter.encode(s.charAt(s.length() - 1))));
+                rotorTextView.setText(presenter.getRotorText());
+            }
+        }
+    };
+
+    private TextWatcher ciphertextWatcher = new TextWatcher() {
+        @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+
+        @Override public void onTextChanged(CharSequence s, int start, int before, int count) { }
+
+        @Override public void afterTextChanged(Editable s) {
+            Log.i("ciphertextWatcher", "entered afterTextChanged method");
+            if (inputFocus == ciphertextTextView) {
+                plaintextTextView.append(String.valueOf(presenter.encode(s.charAt(s.length() - 1))));
+                rotorTextView.setText(presenter.getRotorText());
+            }
+        }
+    };
+
+    public void setRotorTextView(String rotorText) {
+        rotorTextView.setText(rotorText);
+    }
+}

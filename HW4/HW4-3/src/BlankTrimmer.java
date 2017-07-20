@@ -1,0 +1,107 @@
+/*--------------------------------------------------------------------------------------------------
+ * Author:      Dan Cassidy
+ * Date:        2015-07-20
+ * Assignment:  HW4-3
+ * Source File: BlankTrimmer.java
+ * Language:    Java
+ * Course:      CSCI-C 490, Android Programming, MoWe 08:00
+--------------------------------------------------------------------------------------------------*/
+import static java.nio.file.StandardCopyOption.*;
+import static java.nio.file.StandardOpenOption.*;
+
+import java.io.*;
+import java.nio.file.*;
+import java.util.*;
+
+/**
+ * Utility class to trim extra blanks from a file.
+ * 
+ * @author Dan Cassidy
+ */
+public class BlankTrimmer
+{
+    /**
+     * Trims any extra blanks from the passed file.
+     * 
+     * @param filePath The file to be trimmed.
+     * @throws InvalidPathException if the file path is not a file or the path cannot be parsed.
+     * @throws IOException if there is some other I/O exception.
+     * @throws NoSuchFileException 
+     * @throws SecurityException 
+     */
+    public static void trim(String filePath) throws IOException, NoSuchFileException
+    {
+        Path mainFile;
+        Path tempFile;
+        
+        // Check main file.
+        mainFile = Paths.get(filePath);
+        if (Files.notExists(mainFile))
+            throw new NoSuchFileException(mainFile.toString());
+        if (Files.isDirectory(mainFile))
+            throw new InvalidPathException(mainFile.toString(), "Not a file.");
+        if (!Files.isReadable(mainFile))
+            throw new SecurityException("Main file could not be read.");
+        mainFile = mainFile.toRealPath();
+        
+        // Generate and check temp file name.
+        do
+        {
+            tempFile = Paths.get(mainFile.getParent().toString(), createRandomFileName());
+        } while (Files.exists(tempFile));
+        
+        // Open main and temp files.
+        try (   InputStream in = Files.newInputStream(mainFile);
+                OutputStream out = Files.newOutputStream(tempFile, CREATE_NEW))
+        {
+            BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(out));
+            
+            // Copy text from main file to temp file, trimming blanks along the way.
+            String line = null;
+            while ((line = reader.readLine()) != null)
+            {
+                StringTokenizer tokenizer = new StringTokenizer(line, " ");
+                while (tokenizer.hasMoreTokens())
+                {
+                    writer.append(tokenizer.nextToken());
+                    writer.append((tokenizer.hasMoreTokens() ? " " : "\n"));
+                }
+            }
+            
+            // Force the writer to write everything to the file.
+            writer.flush();
+            
+            // Automatically close main and temp files.
+        }
+        
+        // Move the temp file to the main file, overwriting in the process.
+        Files.move(tempFile, mainFile, REPLACE_EXISTING);
+    }
+    
+    /**
+     * Generates a random file name with the prefix of "Temp" followed by 16 random characters from
+     * A-Z, with a file extension of ".tmp".
+     * 
+     * @return String containing the generated file name.
+     */
+    private static String createRandomFileName()
+    {
+        // Define the prefix, suffix, and extension of the file name, as well as how many random
+        // characters are generated.
+        String fileNamePrefix = "Temp";
+        String fileNameSuffix = "";
+        String fileNameExtension = ".tmp";
+        int numRandomChars = 16;
+        
+        Random generator = new Random();
+        String randomFileName = "";
+        
+        // Generate the random characters.
+        for (int numChars = 1; numChars <= numRandomChars; numChars++)
+            randomFileName += (char)(generator.nextInt(26) + 'A');
+
+        // Return the amalgam.
+        return fileNamePrefix + randomFileName + fileNameSuffix + fileNameExtension;
+    }
+}

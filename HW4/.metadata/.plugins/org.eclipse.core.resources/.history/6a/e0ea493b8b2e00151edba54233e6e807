@@ -1,0 +1,21 @@
+import javax.swing.UIManager;
+
+public class Program
+{
+    public static void main(String[] args)
+    {
+        // Use the native look and feel if possible.
+        try
+        {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        }
+        catch (Exception ex)
+        {
+            System.err.println("Something went wrong trying to set the specified look and feel.");
+            System.err.println("Using the default.");
+        }
+        
+        BlankTrimmerController control = new BlankTrimmerController();
+        control.showView();
+    }
+}

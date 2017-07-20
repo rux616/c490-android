@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal" android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    tools:showIn="@layout/activity_main"
+              android:id="@+id/rotorPanelLinearLayout"
+              android:onClick="rotorPanelOnClick">
+
+    <TextView
+        android:layout_width="30dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/greekRotorLabelTextView"
+        android:layout_weight="1"
+        android:gravity="center" />
+
+    <TextView
+        android:layout_width="40dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/greekRotorPositionTextView"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:background="@android:drawable/editbox_background_normal"
+        android:typeface="monospace"
+        android:backgroundTintMode="multiply" />
+
+    <TextView
+        android:layout_width="30dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/leftRotorLabelTextView"
+        android:layout_weight="1"
+        android:gravity="center" />
+
+    <TextView
+        android:layout_width="40dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/leftRotorPositionTextView"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:background="@android:drawable/editbox_background_normal"
+        android:typeface="monospace"
+        android:backgroundTintMode="multiply"
+        />
+
+    <TextView
+        android:layout_width="30dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/middleRotorLabelTextView"
+        android:layout_weight="1"
+        android:gravity="center" />
+
+    <TextView
+        android:layout_width="40dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/middleRotorPositionTextView"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:background="@android:drawable/editbox_background_normal"
+        android:typeface="monospace"
+        android:backgroundTintMode="multiply"
+        />
+
+    <TextView
+        android:layout_width="30dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/rightRotorLabelTextView"
+        android:layout_weight="1"
+        android:gravity="center" />
+
+    <TextView
+        android:layout_width="40dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/rightRotorPositionTextView"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:background="@android:drawable/editbox_background_normal"
+        android:typeface="monospace"
+        android:backgroundTintMode="multiply"
+        />
+
+</LinearLayout>

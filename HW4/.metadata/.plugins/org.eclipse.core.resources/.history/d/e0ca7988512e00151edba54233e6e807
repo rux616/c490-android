@@ -1,0 +1,46 @@
+import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+
+@SuppressWarnings("serial")
+public class BlankTrimmerView extends JFrame
+{
+    JTextField filePath = new JTextField();
+    JButton trimButton = new JButton("Trim");
+    
+    public BlankTrimmerView()
+    {
+        super("Blank Trimmer");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLayout(new BorderLayout());
+        
+        add(new JLabel("Please choose a file: "), BorderLayout.WEST);
+        
+        add(filePath, BorderLayout.CENTER);
+        
+        JButton browseButton = new JButton("Browse...");
+        browseButton.addActionListener(new ActionListener()
+        {
+            public void actionPerformed(ActionEvent event)
+            {
+                // File chooser dialog.
+                final JFileChooser fileChooser = new JFileChooser();
+                //fileChooser.setCurrentDirectory(null);
+                
+                int result = fileChooser.showOpenDialog(BlankTrimmerView.this);
+                
+                if (result == JFileChooser.APPROVE_OPTION)
+                    filePath.setText(fileChooser.getSelectedFile().getAbsolutePath());
+            }
+        });
+        add(browseButton, BorderLayout.EAST);
+        
+        add(trimButton, BorderLayout.SOUTH);
+    }
+}

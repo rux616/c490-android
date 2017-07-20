@@ -1,0 +1,206 @@
+<GridLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="match_parent"
+    android:columnCount="5"
+    android:useDefaultMargins="true"
+    tools:context="com.chaoticcognitions.aenigma.views.SettingsActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/settings_machine_type_label"
+        android:id="@+id/machineTypeSelectionTextView"
+        android:layout_gravity="center_vertical"
+        android:layout_columnSpan="3"
+        />
+
+    <Spinner
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/machineTypeSelectionSpinner"
+        android:layout_gravity="fill_horizontal|right"
+        android:layout_columnSpan="2"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/settings_reflector_type_label"
+        android:id="@+id/reflectorSelectionTextView"
+        android:layout_gravity="center_vertical"
+        android:layout_columnSpan="3"/>
+
+    <Spinner
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/reflectorSelectionSpinner"
+        android:layout_gravity="fill_horizontal|right"
+        android:gravity="right"
+        android:layout_columnSpan="2"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/settings_greek_rotor_type_label"
+        android:id="@+id/greekRotorLabelTextView"
+        android:layout_gravity="center_horizontal"
+        android:layout_column="1"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/settings_left_rotor_type_label"
+        android:id="@+id/leftRotorLabelTextView"
+        android:layout_gravity="center_horizontal"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/settings_middle_rotor_type_label"
+        android:id="@+id/middleRotorLabelTextView"
+        android:layout_gravity="center_horizontal"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/settings_right_rotor_type_label"
+        android:id="@+id/rightRotorLabelTextView"
+        android:layout_gravity="center_horizontal"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/settings_rotor_selection_label"
+        android:id="@+id/rotorSelectionTextView"
+        android:layout_gravity="center_vertical"/>
+
+    <Spinner
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/greekRotorSelectionSpinner"
+        android:layout_columnWeight="1"
+        android:layout_gravity="fill_horizontal|right"
+        />
+
+    <Spinner
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/leftRotorSelectionSpinner"
+        android:layout_columnWeight="1"
+        android:layout_gravity="fill_horizontal|right"/>
+
+    <Spinner
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/middleRotorSelectionSpinner"
+        android:layout_columnWeight="1"
+        android:layout_gravity="fill_horizontal|right"/>
+
+    <Spinner
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/rightRotorSelectionSpinner"
+        android:layout_columnWeight="1"
+        android:layout_gravity="fill_horizontal|right"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/settings_ring_setting_label"
+        android:id="@+id/ringSettingTextView"
+        android:layout_gravity="center_vertical"
+        />
+
+    <Spinner
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/greekRingSettingSpinner"
+        android:layout_columnWeight="1"
+        android:layout_gravity="fill_horizontal|right"
+        android:entries="@array/rotor_alphanumeric"/>
+
+    <Spinner
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/leftRingSettingSpinner"
+        android:layout_columnWeight="1"
+        android:layout_gravity="fill_horizontal|right"
+        android:entries="@array/rotor_alphanumeric"/>
+
+    <Spinner
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/middleRingSettingSpinner"
+        android:layout_columnWeight="1"
+        android:layout_gravity="fill_horizontal|right"
+        android:entries="@array/rotor_alphanumeric"/>
+
+    <Spinner
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/rightRingSettingSpinner"
+        android:layout_columnWeight="1"
+        android:layout_gravity="fill_horizontal|right"
+        android:entries="@array/rotor_alphanumeric"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/settings_position_label"
+        android:id="@+id/positionSelectionTextView"
+        android:layout_gravity="center_vertical"
+        />
+
+    <Spinner
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/greekPositionSelectionSpinner"
+        android:layout_columnWeight="1"
+        android:layout_gravity="fill_horizontal|right"
+        android:entries="@array/rotor_alphanumeric"/>
+
+    <Spinner
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/leftPositionSelectionSpinner"
+        android:layout_columnWeight="1"
+        android:layout_gravity="fill_horizontal|right"
+        android:entries="@array/rotor_alphanumeric"/>
+
+    <Spinner
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/middlePositionSelectionSpinner"
+        android:layout_columnWeight="1"
+        android:layout_gravity="fill_horizontal|right"
+        android:entries="@array/rotor_alphanumeric"/>
+
+    <Spinner
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/rightPositionSelectionSpinner"
+        android:layout_columnWeight="1"
+        android:layout_gravity="fill_horizontal|right"
+        android:entries="@array/rotor_alphanumeric"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/settings_plugboard_pairs_label"
+        android:id="@+id/plugboardPairsTextView"
+        android:layout_columnSpan="5"/>
+
+    <EditText
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/plugboardPairsEditText"
+        android:layout_columnSpan="5"
+        android:hint="@string/settings_plugboard_pairs_hint"
+        android:inputType="textNoSuggestions"/>
+</GridLayout>

@@ -1,0 +1,44 @@
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class GameController
+{
+    private Game theGame;
+    private GameView theView;
+    
+    public GameController(int numRows, int numColumns, int winLength)
+    {
+        theGame = new Game(numRows, numColumns, winLength);
+        theView = new GameView(theGame.getRows(), theGame.getColumns());
+        
+        theView.addResetButtonActionListener(new ActionListener()
+        {
+            public void actionPerformed(ActionEvent evt)
+            {
+                theGame.reset();
+                theView.reset();
+                theView.setStatusLabelText(statusHelper(theGame.getStatus(), theGame.getTurn()));
+            }
+        });
+    }
+    
+    public void showView()
+    {
+        theView.pack();
+        theView.setVisible(true);
+    }
+
+    private String statusHelper(Game.Status status, Game.Mark turn)
+    {
+        if (status == Game.Status.IN_PROGRESS)
+            return "In Progress: " + turn + "'s Turn";
+        else if (status == Game.Status.X_WIN)
+            return "Game Over: X Wins";
+        else if (status == Game.Status.O_WIN)
+            return "Game Over: O Wins";
+        else if (status == Game.Status.DRAW)
+            return "Game Over: Draw";
+        else
+            return "Unknown Status";
+    }
+}

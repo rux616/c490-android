@@ -1,0 +1,59 @@
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+
+@SuppressWarnings("serial")
+public class BlankTrimmerView extends JFrame
+{
+    JTextField filePath = new JTextField();
+    JButton trimButton = new JButton("Trim");
+    
+    public BlankTrimmerView()
+    {
+        super("Blank Trimmer");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLayout(new BorderLayout());
+        
+        //JPanel westPanel = new JPanel(new FlowLayout());
+        //westPanel.add(new JLabel("Please choose a file:"));
+        //add(westPanel, BorderLayout.WEST);
+        add(new JLabel("Please choose a file:"), BorderLayout.WEST);
+        
+        //JPanel centerPanel = new JPanel(new FlowLayout());
+        filePath.setPreferredSize(new Dimension(200, 20));
+        //centerPanel.add(filePath);
+        //add(centerPanel, BorderLayout.CENTER);
+        add(filePath, BorderLayout.CENTER);
+        
+        JPanel eastPanel = new JPanel(new FlowLayout());
+        JButton browseButton = new JButton("Browse...");
+        browseButton.addActionListener(new ActionListener()
+        {
+            public void actionPerformed(ActionEvent event)
+            {
+                // File chooser dialog.
+                final JFileChooser fileChooser = new JFileChooser();
+                
+                int result = fileChooser.showOpenDialog(BlankTrimmerView.this);
+                
+                if (result == JFileChooser.APPROVE_OPTION)
+                    filePath.setText(fileChooser.getSelectedFile().getAbsolutePath());
+            }
+        });
+        eastPanel.add(browseButton);
+        add(eastPanel, BorderLayout.EAST);
+        
+        JPanel southPanel = new JPanel(new FlowLayout());
+        southPanel.add(trimButton);
+        add(southPanel, BorderLayout.SOUTH);
+    }
+}

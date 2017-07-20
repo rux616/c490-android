@@ -1,0 +1,82 @@
+/*--------------------------------------------------------------------------------------------------
+ * Author:      Dan Cassidy
+ * Date:        2015-
+ * Assignment:  
+ * Source File: .java
+ * Language:    Java
+ * Course:      CSCI-C 490, Android Programming, MoWe 08:00
+--------------------------------------------------------------------------------------------------*/
+import static java.nio.file.StandardCopyOption.*;
+import static java.nio.file.StandardOpenOption.*;
+
+import java.io.*;
+import java.nio.file.*;
+import java.util.*;
+
+public class BlankTrimmer
+{
+    public static void trim(String filePath) throws IOException, NoSuchFileException
+    {
+        Path mainFile;
+        Path tempFile;
+        
+        // Check main file.
+        mainFile = Paths.get(filePath);
+        if (Files.notExists(mainFile))
+            throw new NoSuchFileException(mainFile.toString());
+        mainFile = mainFile.toRealPath();
+        
+        // Generate and check temp file name.
+        do
+        {
+            tempFile = Paths.get(mainFile.getParent().toString(), createRandomFileName());
+        } while (Files.exists(tempFile));
+        
+        // Open main and temp files.
+        try (   InputStream in = Files.newInputStream(mainFile);
+                OutputStream out = Files.newOutputStream(tempFile, CREATE_NEW))
+        {
+            BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(out));
+            
+            // Copy text from main file to temp file, trimming blanks along the way.
+            String line = null;
+            while ((line = reader.readLine()) != null)
+            {
+                StringTokenizer tokenizer = new StringTokenizer(line, " ");
+                while (tokenizer.hasMoreTokens())
+                {
+                    writer.append(tokenizer.nextToken());
+                    writer.append((tokenizer.hasMoreTokens() ? " " : "\n"));
+                }
+            }
+            // (Automatically) Close main and temp files.
+        }
+        
+        // Overwrite main file with temp file.
+        Files.move(tempFile, mainFile, REPLACE_EXISTING);
+    }
+    
+    /**
+     * 
+     * 
+     * @return
+     */
+    private static String createRandomFileName()
+    {
+        // Define the prefix and postfix of the file name, as well as how many random characters.
+        String fileNamePrefix = "ZZZBlankTrimmer";
+        String fileNamePostfix = ".tmp";
+        int maxRandomChars = 16;
+        
+        Random generator = new Random();
+        String randomFileName = "";
+        
+        // Generate the random characters.
+        for (int charNum = 1; charNum <= maxRandomChars; charNum++)
+            randomFileName += (char)(generator.nextInt(26) + 'A');
+
+        // Return the amalgam.
+        return fileNamePrefix + randomFileName + fileNamePostfix;
+    }
+}

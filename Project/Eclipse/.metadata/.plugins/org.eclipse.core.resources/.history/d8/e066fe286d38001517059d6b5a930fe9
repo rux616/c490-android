@@ -1,0 +1,571 @@
+package com.chaoticcognitions.aenigma.models.rotors;
+
+/**
+ * Created by Dan on 2015-07-28.
+ */
+public enum RotorType {
+    // Enigma I - German Army and Air Force (Wehrmacht, Luftwaffe)
+    // Stator
+    I_ETW,
+    // Rotors
+    I_I, I_II, I_III, I_IV, I_V,
+    // Reflectors
+    I_UKW_A, I_UKW_B, I_UKW_C,
+
+    // Norway Enigma - Enigma I used postwar by Norway
+    // Stator
+    N_ETW,
+    // Rotors
+    N_I, N_II, N_III, N_IV, N_V,
+    // Reflectors
+    N_UKW,
+
+    // Enigma M3 - German Navy (Kriegsmarine)
+    // Stator
+    M3_ETW,
+    // Rotors
+    M3_I, M3_II, M3_III, M3_IV, M3_V, M3_VI, M3_VII, M3_VIII,
+    // Reflectors
+    M3_UKW_B, M3_UKW_C,
+
+    // Enigma M4 - U-Boot Enigma
+    // Stator
+    M4_ETW,
+    // Rotors
+    M4_I, M4_II, M4_III, M4_IV, M4_V, M4_VI, M4_VII, M4_VIII, M4_BETA, M4_GAMMA,
+    // Reflectors
+    M4_UKW_B, M4_UKW_C,
+
+    // Enigma G - Zählwerk Enigma A28 and G31
+    // Stator
+    G_ETW,
+    // Rotors
+    G_I, G_II, G_III,
+    // Reflectors
+    G_UKW,
+
+    // Enigma D - Commercial Enigma A26
+    // Stator
+    D_ETW,
+    // Rotors
+    D_I, D_II, D_III,
+    // Reflectors
+    D_UKW,
+
+    // Enigma K - Commercial Enigma A27
+    // Stator
+    K_ETW,
+    // Rotors
+    K_I, K_II, K_III,
+    // Reflectors
+    K_UKW,
+
+    // Swiss K - Swiss Enigma K Variant (Swiss Air Force)
+    // Stator
+    KS_ETW,
+    // Rotors
+    KS_I, KS_II, KS_III,
+    // Reflectors
+    KS_UKW,
+
+    // Enigma KD - Enigma K with UWK-D *** (Rewirable) ***
+    // Stator
+    KD_ETW,
+    // Rotors
+    KD_I, KD_II, KD_III,
+    // Reflectors
+    KD_UKW,
+
+    // Railway Enigma - Modified Enigma K
+    // Stator
+    R_ETW,
+    // Rotors
+    R_I, R_II, R_III,
+    // Reflectors
+    R_UKW,
+
+    // Enigma T - Japanese Enigma (Tirpitz)
+    // Stator
+    T_ETW,
+    // Rotors
+    T_I, T_II, T_III, T_IV, T_V, T_VI, T_VII, T_VIII,
+    // Reflectors
+    T_UKW;
+
+    /**
+     * Get the wiring for the different types of rotors.
+     */
+    public String getWiring() {
+        switch (this) {
+            // Stators
+            case I_ETW:
+            case N_ETW:
+            case M3_ETW:
+            case M4_ETW:
+                return "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            case G_ETW:
+            case D_ETW:
+            case K_ETW:
+            case KS_ETW:
+            case KD_ETW:
+            case R_ETW:
+                return "QWERTZUIOASDFGHJKPYXCVBNML";
+            case T_ETW:
+                return "KZROUQHYAIGBLWVSTDXFPNMCJE";
+
+            // Rotors
+            case I_I:
+            case M3_I:
+            case M4_I:
+                return "EKMFLGDQVZNTOWYHXUSPAIBRCJ";
+            case I_II:
+            case M3_II:
+            case M4_II:
+                return "AJDKSIRUXBLHWTMCQGZNPYFVOE";
+            case I_III:
+            case M3_III:
+            case M4_III:
+                return "BDFHJLCPRTXVZNYEIWGAKMUSQO";
+            case I_IV:
+            case N_IV:
+            case M3_IV:
+            case M4_IV:
+                return "ESOVPZJAYQUIRHXLNFTGKDCMWB";
+            case I_V:
+            case M3_V:
+            case M4_V:
+                return "VZBRGITYUPSDNHLXAWMJQOFECK";
+            case N_I:
+                return "WTOKASUYVRBXJHQCPZEFMDINLG";
+            case N_II:
+                return "GJLPUBSWEMCTQVHXAOFZDRKYNI";
+            case N_III:
+                return "JWFMHNBPUSDYTIXVZGRQLAOEKC";
+            case N_V:
+                return "HEJXQOTZBVFDASCILWPGYNMURK";
+            case M3_VI:
+            case M4_VI:
+                return "JPGVOUMFYQBENHZRDKASXLICTW";
+            case M3_VII:
+            case M4_VII:
+                return "NZJHGRCXMYSWBOUFAIVLPEKQDT";
+            case M3_VIII:
+            case M4_VIII:
+                return "FKQHTLXOCBJSPDZRAMEWNIUYGV";
+            case M4_BETA:
+                return "LEYJVCNIXWPBQMDRTAKZGFUHOS";
+            case M4_GAMMA:
+                return "FSOKANUERHMBTIYCWLQPZXVGJD";
+            case G_I:
+            case D_I:
+            case K_I:
+                return "LPGSZMHAEOQKVXRFYBUTNICJDW";
+            case G_II:
+            case D_II:
+            case K_II:
+                return "SLVGBTFXJQOHEWIRZYAMKPCNDU";
+            case G_III:
+            case D_III:
+            case K_III:
+                return "CJGDPSHKTURAWZXFMYNQOBVLIE";
+            case KS_I:
+                return "PEZUOHXSCVFMTBGLRINQJWAYDK";
+            case KS_II:
+                return "ZOUESYDKFWPCIQXHMVBLGNJRAT";
+            case KS_III:
+                return "EHRVXGAOBQUSIMZFLYNWKTPDJC";
+            case KD_I:
+                return "VEZIOJCXKYDUNTWAPLQGBHSFMR";
+            case KD_II:
+                return "HGRBSJZETDLVPMQYCXAOKINFUW";
+            case KD_III:
+                return "NWLHXGRBYOJSAZDVTPKFQMEUIC";
+            case R_I:
+                return "JGDQOXUSCAMIFRVTPNEWKBLZYH";
+            case R_II:
+                return "NTZPSFBOKMWRCJDIVLAEYUXHGQ";
+            case R_III:
+                return "JVIUBHTCDYAKEQZPOSGXNRMWFL";
+            case T_I:
+                return "KPTYUELOCVGRFQDANJMBSWHZXI";
+            case T_II:
+                return "UPHZLWEQMTDJXCAKSOIGVBYFNR";
+            case T_III:
+                return "QUDLYRFEKONVZAXWHMGPJBSICT";
+            case T_IV:
+                return "CIWTBKXNRESPFLYDAGVHQUOJZM";
+            case T_V:
+                return "UAXGISNJBVERDYLFZWTPCKOHMQ";
+            case T_VI:
+                return "XFUZGALVHCNYSEWQTDMRBKPIOJ";
+            case T_VII:
+                return "BJVFTXPLNAYOZIKWGDQERUCHSM";
+            case T_VIII:
+                return "YMTPNZHWKODAJXELUQVGCBISFR";
+
+            // Reflectors
+            case I_UKW_A:
+                return "EJMZALYXVBWFCRQUONTSPIKHGD";
+            case I_UKW_B:
+            case M3_UKW_B:
+                return "YRUHQSLDPXNGOKMIEBFZCWVJAT";
+            case I_UKW_C:
+            case M3_UKW_C:
+                return "FVPJIAOYEDRZXWGCTKUQSBNMHL";
+            case N_UKW:
+                return "MOWJYPUXNDSRAIBFVLKZGQCHET";
+            case M4_UKW_B:
+                return "ENKQAUYWJICOPBLMDXZVFTHRGS";
+            case M4_UKW_C:
+                return "RDOBJNTKVEHMLFCWZAXGYIPSUQ";
+            case G_UKW:
+            case D_UKW:
+            case K_UKW:
+            case KS_UKW:
+                return "IMETCGFRAYSQBZXWLHKDVUPOJN";
+            case KD_UKW:
+                return "NSUOMKLIHZFGEADVXWBYCPRQTJ"; // Rewireable!
+            case R_UKW:
+                return "QYHOGNECVPUZTFDJAXWMKISRBL";
+            case T_UKW:
+                return "GEKPBTAUMOCNILJDXZYFHWVQSR";
+
+            default:
+                return "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        }
+    }
+
+    /**
+     * Get the reverse wiring for the different types of rotors.
+     */
+    public String getReverseWiring() {
+        String wiring = this.getWiring();
+        char[] reverseWiring = new char[wiring.length()];
+
+        for (int index = 0; index < wiring.length(); index++)
+            reverseWiring[wiring.charAt(index) - 'A'] = (char)(index + 'A');
+
+        return new String(reverseWiring);
+    }
+
+    /**
+     * Get the turnover chars for the different types of rotors.
+     */
+    public String getTurnoverChars() {
+        switch (this) {
+            // Stators
+            case I_ETW:
+            case N_ETW:
+            case M3_ETW:
+            case M4_ETW:
+            case G_ETW:
+            case D_ETW:
+            case K_ETW:
+            case KS_ETW:
+            case KD_ETW:
+            case R_ETW:
+            case T_ETW:
+                return "";
+
+            // Rotors
+            case I_I:
+            case N_I:
+            case M3_I:
+            case M4_I:
+                return "Q";
+            case I_II:
+            case N_II:
+            case M3_II:
+            case M4_II:
+                return "E";
+            case I_III:
+            case N_III:
+            case M3_III:
+            case M4_III:
+                return "V";
+            case I_IV:
+            case N_IV:
+            case M3_IV:
+            case M4_IV:
+                return "J";
+            case I_V:
+            case N_V:
+            case M3_V:
+            case M4_V:
+                return "Z";
+            case M3_VI:
+            case M4_VI:
+            case M3_VII:
+            case M4_VII:
+            case M3_VIII:
+            case M4_VIII:
+                return "ZM";
+            case M4_BETA:
+            case M4_GAMMA:
+                return "";
+            case G_I:
+                return "SUVWZABCEFGIKLOPQ";
+            case G_II:
+                return "STVYZACDFGHKMNQ";
+            case G_III:
+                return "UWXAEFHKMNR";
+            case D_I:
+            case K_I:
+            case KS_I:
+            case R_III:
+                return "Y";
+            case KS_II:
+            case D_II:
+            case K_II:
+            case R_II:
+                return "E";
+            case D_III:
+            case K_III:
+            case KS_III:
+            case R_I:
+                return "N";
+            case KD_I:
+            case KD_II:
+            case KD_III:
+                return "SUYAEHLNQ";
+            case T_I:
+            case T_III:
+                return "WZEKQ";
+            case T_II:
+            case T_IV:
+                return "WZFLR";
+            case T_V:
+            case T_VII:
+                return "YCFKR";
+            case T_VI:
+            case T_VIII:
+                return "XEIMQ";
+
+            // Reflectors
+            case I_UKW_A:
+            case I_UKW_B:
+            case I_UKW_C:
+            case N_UKW:
+            case M3_UKW_B:
+            case M3_UKW_C:
+            case M4_UKW_B:
+            case M4_UKW_C:
+            case G_UKW:
+            case D_UKW:
+            case K_UKW:
+            case KS_UKW:
+            case KD_UKW:
+            case R_UKW:
+            case T_UKW:
+                return "";
+
+            default:
+                return "";
+        }
+    }
+
+    /**
+     * Get whether the rotor steps or not based on the type.
+     */
+    public boolean isSteppingRotor() {
+        switch (this) {
+            // Stators
+            case I_ETW:
+            case N_ETW:
+            case M3_ETW:
+            case M4_ETW:
+            case G_ETW:
+            case D_ETW:
+            case K_ETW:
+            case KS_ETW:
+            case KD_ETW:
+            case R_ETW:
+            case T_ETW:
+                return false;
+
+            // Rotors
+            case I_I:
+            case I_II:
+            case I_III:
+            case I_IV:
+            case I_V:
+            case N_I:
+            case N_II:
+            case N_III:
+            case N_IV:
+            case N_V:
+            case M3_I:
+            case M3_II:
+            case M3_III:
+            case M3_IV:
+            case M3_V:
+            case M3_VI:
+            case M3_VII:
+            case M3_VIII:
+            case M4_I:
+            case M4_II:
+            case M4_III:
+            case M4_IV:
+            case M4_V:
+            case M4_VI:
+            case M4_VII:
+            case M4_VIII:
+            case G_I:
+            case G_II:
+            case G_III:
+            case D_I:
+            case D_II:
+            case D_III:
+            case K_I:
+            case K_II:
+            case K_III:
+            case KS_I:
+            case KS_II:
+            case KS_III:
+            case KD_I:
+            case KD_II:
+            case KD_III:
+            case R_I:
+            case R_II:
+            case R_III:
+            case T_I:
+            case T_II:
+            case T_III:
+            case T_IV:
+            case T_V:
+            case T_VI:
+            case T_VII:
+            case T_VIII:
+                return true;
+            case M4_BETA:
+            case M4_GAMMA:
+                return false;
+
+            // Reflectors
+            case I_UKW_A:
+            case I_UKW_B:
+            case I_UKW_C:
+            case N_UKW:
+            case M3_UKW_B:
+            case M3_UKW_C:
+            case M4_UKW_B:
+            case M4_UKW_C:
+            case D_UKW:
+            case K_UKW:
+            case KS_UKW:
+            case KD_UKW:
+            case R_UKW:
+            case T_UKW:
+                return false;
+            case G_UKW:
+                return true;
+
+            default:
+                return false;
+        }
+    }
+
+    /**
+     * Get whether the rotor is marked with numbers or not based on the type.
+     */
+    public boolean isMarkedWithNumbers() {
+        switch (this) {
+            // Stators
+            case I_ETW:
+            case N_ETW:
+            case M3_ETW:
+            case M4_ETW:
+            case G_ETW:
+            case D_ETW:
+            case K_ETW:
+            case KS_ETW:
+            case KD_ETW:
+            case R_ETW:
+            case T_ETW:
+                return false;
+
+            // Rotors
+            case I_I:
+            case I_II:
+            case I_III:
+            case I_IV:
+            case I_V:
+            case N_I:
+            case N_II:
+            case N_III:
+            case N_IV:
+            case N_V:
+                return true;
+            case M3_I:
+            case M3_II:
+            case M3_III:
+            case M3_IV:
+            case M3_V:
+            case M3_VI:
+            case M3_VII:
+            case M3_VIII:
+            case M4_I:
+            case M4_II:
+            case M4_III:
+            case M4_IV:
+            case M4_V:
+            case M4_VI:
+            case M4_VII:
+            case M4_VIII:
+            case M4_BETA:
+            case M4_GAMMA:
+            case G_I:
+            case G_II:
+            case G_III:
+            case D_I:
+            case D_II:
+            case D_III:
+            case K_I:
+            case K_II:
+            case K_III:
+            case KS_I:
+            case KS_II:
+            case KS_III:
+            case KD_I:
+            case KD_II:
+            case KD_III:
+            case R_I:
+            case R_II:
+            case R_III:
+            case T_I:
+            case T_II:
+            case T_III:
+            case T_IV:
+            case T_V:
+            case T_VI:
+            case T_VII:
+            case T_VIII:
+                return false;
+
+            // Reflectors
+            case I_UKW_A:
+            case I_UKW_B:
+            case I_UKW_C:
+            case N_UKW:
+            case M3_UKW_B:
+            case M3_UKW_C:
+            case M4_UKW_B:
+            case M4_UKW_C:
+            case G_UKW:
+            case D_UKW:
+            case K_UKW:
+            case KS_UKW:
+            case KD_UKW:
+            case R_UKW:
+            case T_UKW:
+                return false;
+
+            default:
+                return false;
+        }
+    }
+
+    @Override public String toString() {
+        return super.toString().substring(super.toString().indexOf('_')).replace('_', '-');
+    }
+}

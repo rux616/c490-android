@@ -1,0 +1,16 @@
+
+public class BlankTrimmerController
+{
+    BlankTrimmerModel theModel = new BlankTrimmerModel();
+    BlankTrimmerView theView = new BlankTrimmerView();
+    
+    public BlankTrimmerController()
+    {
+        
+    }
+    
+    public void showView()
+    {
+        theView.setVisible(true);
+    }
+}

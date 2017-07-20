@@ -1,0 +1,52 @@
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.nio.file.InvalidPathException;
+
+import javax.swing.JOptionPane;
+
+public class BlankTrimmerController
+{
+    BlankTrimmerView theView = new BlankTrimmerView();
+    
+    public BlankTrimmerController()
+    {
+        theView.addTrimButtonActionListener(new ActionListener()
+        {
+            public void actionPerformed(ActionEvent event)
+            {
+                // TODO: Finish action listener.
+                String message = "";
+                int messageType = 0;
+                
+                String filePath = theView.getFilePath();
+                
+                try
+                {
+                    BlankTrimmer.trim(filePath);
+                    message = "Blanks trimmed successfully.";
+                    messageType = JOptionPane.INFORMATION_MESSAGE;
+                }
+                catch (InvalidPathException ex)
+                {
+                    message = "";
+                    messageType = JOptionPane.ERROR_MESSAGE;
+                }
+                catch (Exception ex)
+                {
+                    ex.printStackTrace();
+                    message = "Unknown error:\n" + ex.getMessage();
+                    messageType = JOptionPane.ERROR_MESSAGE;
+                }
+                finally
+                {
+                    theView.showMessage(message, messageType);
+                }
+            }
+        });
+    }
+    
+    public void showView()
+    {
+        theView.setVisible(true);
+    }
+}

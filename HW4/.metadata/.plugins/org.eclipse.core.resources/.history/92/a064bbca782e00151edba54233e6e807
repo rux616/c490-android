@@ -1,0 +1,40 @@
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Random;
+
+public class BlankTrimmer
+{
+    public static boolean trim(String filePath) throws IOException
+    {
+        String tempFilePrefix = "BlankTrimmer";
+        String tempFilePostfix = ".tmp";
+        int maxRandomChars = 16;
+        Path mainFile;
+        Path tempFile;
+        // Check main file.
+        mainFile = Paths.get(filePath).toRealPath();
+        
+        // Generate temp file name.
+        do
+        {
+            Random generator = new Random();
+            String randomFileName = "";
+            for (int charNum = 1; charNum <= maxRandomChars; charNum++)
+                randomFileName += (char)(generator.nextInt(26) + 'A');
+            tempFile = Paths.get(mainFile.getParent().toString(),
+                    tempFilePrefix + randomFileName + tempFilePostfix);
+        } while (Files.exists(tempFile));
+        return true;
+        
+        // Check temp file.
+        // Open main file.
+        // Open temp file.
+        // Copy text from main file to temp file, trimming blanks along the way.
+        // Close main file.
+        // Close temp file.
+        // Delete main file.
+        // Rename temp file to main file.
+    }
+}

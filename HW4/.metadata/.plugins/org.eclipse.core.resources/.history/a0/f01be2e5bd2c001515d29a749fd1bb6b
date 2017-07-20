@@ -1,0 +1,61 @@
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class GameController
+{
+    private Game theGame;
+    private GameView theView;
+    
+    public GameController(int numRows, int numColumns, int winLength)
+    {
+        theGame = new Game(numRows, numColumns, winLength);
+        theView = new GameView(theGame.getRows(), theGame.getColumns());
+        theView.setGameTypeLabelText(theGame.getWinLength() + " in a row wins");
+        theView.setStatusLabelText(statusHelper());
+        
+        theView.addResetButtonActionListener(new ActionListener()
+        {
+            public void actionPerformed(ActionEvent evt)
+            {
+                theGame.reset();
+                theView.reset();
+                theView.setStatusLabelText(statusHelper());
+            }
+        });
+        
+        theView.addBoardButtonActionListener(new ActionListener()
+        {
+            public void actionPerformed(ActionEvent evt)
+            {
+                int row = Integer.parseInt(evt.getActionCommand()) / theGame.getColumns();
+                int column = Integer.parseInt(evt.getActionCommand()) % theGame.getColumns();
+                
+                theGame.playMove(row, column);
+                theView.setBoardButtonText(row, column, theGame.getSpaceString(row, column));
+                theView.setStatusLabelText(statusHelper());
+            }
+        });
+    }
+    
+    public void showView()
+    {
+        //theView.pack();
+        theView.setVisible(true);
+    }
+
+    private String statusHelper()
+    {
+        Game.Status status = theGame.getStatus();
+        
+        if (status == Game.Status.IN_PROGRESS)
+            return "In Progress: " + theGame.getTurn() + "'s Turn";
+        else if (status == Game.Status.X_WIN)
+            return "Game Over: X Wins";
+        else if (status == Game.Status.O_WIN)
+            return "Game Over: O Wins";
+        else if (status == Game.Status.DRAW)
+            return "Game Over: Draw";
+        else
+            return "Unknown Status";
+    }
+}

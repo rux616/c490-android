@@ -1,0 +1,19 @@
+
+public class TicTacToe
+{
+    public static void main(String[] args)
+    {
+        // TODO Auto-generated method stub
+        Game newGame = new Game();
+        newGame.playMove(0, 0);
+        newGame.playMove(1, 0);
+        newGame.playMove(1, 1);
+        newGame.playMove(2, 0);
+        newGame.playMove(2, 2);
+        newGame.printBoard();
+        System.out.println(newGame.getStatus());
+        GameView gui = new GameView(3, 3);
+        gui.pack();
+        gui.setVisible(true);
+    }
+}

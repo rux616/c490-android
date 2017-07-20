@@ -1,0 +1,9 @@
+
+public class Program
+{
+    public static void main(String[] args)
+    {
+        BlankTrimmerController control = new BlankTrimmerController();
+        control.showView();
+    }
+}

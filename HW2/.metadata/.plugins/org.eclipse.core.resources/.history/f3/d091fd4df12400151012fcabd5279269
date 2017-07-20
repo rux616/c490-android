@@ -1,0 +1,105 @@
+package dc.c490.hw2_1;
+
+public class Rational
+{
+	private int numerator = 0;
+	private int denominator = 1;
+	
+	/**
+	 * Default constructor.
+	 */
+	public Rational()
+	{
+		// Do nothing, numerator and denominator are already set to 0 and 1 respectively.
+	}
+	
+	/**
+	 * 
+	 * @param wholeNumber
+	 */
+	public Rational(int wholeNumber)
+	{
+		this.setNumerator(wholeNumber);
+		// Don't have to set denominator because it's 1 by default.
+	}
+	
+	/**
+	 * 
+	 * @param numerator
+	 * @param denominator
+	 */
+	public Rational(int numerator, int denominator)
+	{
+		this.setNumerator(numerator);
+		this.setDenominator(denominator);
+	}
+	
+	// BEGIN GETTERS AND SETTERS -->
+	public int getDenominator()
+	{
+		return this.denominator;
+	}
+	
+	public void setDenominator(int denominator)
+	{
+		if (denominator != 0)
+			this.denominator = denominator;
+	}
+	
+	public int getNumerator()
+	{
+		return this.numerator;
+	}
+	
+	public void setNumerator(int numerator)
+	{
+		this.numerator = numerator;
+	}
+	// <-- END GETTERS AND SETTERS
+	
+	public static Rational add(Rational r1, Rational r2)
+	{
+		if (r1.getDenominator() == r2.getDenominator())
+			return new Rational(r1.getNumerator() + r2.getNumerator(), r1.getDenominator());
+		else
+			return new Rational(
+					r1.getNumerator() * r2.getDenominator() + 
+					r2.getNumerator() * r1.getDenominator(),
+					r1.getDenominator() * r2.getDenominator());
+	}
+	
+	public static Rational subtract(Rational r1, Rational r2)
+	{
+		if (r1.getDenominator() == r2.getDenominator())
+			return new Rational(r1.getNumerator() - r2.getNumerator(), r1.getDenominator());
+		else
+			return new Rational(
+					r1.getNumerator() * r2.getDenominator() - 
+					r2.getNumerator() * r1.getDenominator(),
+					r1.getDenominator() * r2.getDenominator());
+	}
+	
+	public static Rational multiply(Rational r1, Rational r2)
+	{
+		return new Rational(
+				r1.getNumerator() * r2.getNumerator(), 
+				r1.getDenominator() * r2.getDenominator());
+	}
+	
+	public static Rational divide(Rational r1, Rational r2)
+	{
+		return new Rational(
+				r1.getNumerator() * r2.getDenominator(),
+				r1.getDenominator() * r2.getNumerator());
+	}
+	
+	public boolean equals(Rational other)
+	{
+		return (this.numerator * other.denominator == other.numerator * this.denominator);
+	}
+	
+	public String toString()
+	{
+		return numerator + "/" + denominator;
+	}
+}

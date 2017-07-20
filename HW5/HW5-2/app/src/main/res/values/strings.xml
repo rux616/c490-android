@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Scrapbook</string>
+
+    <string name="text_arc_de_triomphe_caption">Arc De Triomphe</string>
+    <string name="text_athens_acropolis_caption">Athens Acropolis</string>
+    <string name="text_giza_pyramids_caption">Pyramids at Giza</string>
+    <string name="text_space_needle_caption">Seattle Space Needle</string>
+</resources>

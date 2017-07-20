@@ -1,0 +1,25 @@
+package com.chaoticcognitions.aenigma.presenters;
+
+import com.chaoticcognitions.aenigma.models.machines.Machine;
+
+/**
+ * Created by Dan on 2015-07-28.
+ */
+public class EnigmaPresenter {
+    private Machine theModel;
+    private Activity theView;
+
+    public EnigmaPresenter(Activity theView) {
+        theModel = new Machine();
+        this.theView = theView;
+    }
+
+    public char encode(char inputChar) {
+        return theModel.encode(inputChar);
+
+    }
+
+    public String getRotorText() {
+        return theModel.getRotorString();
+    }
+}

@@ -1,0 +1,101 @@
+/*--------------------------------------------------------------------------------------------------
+ * Author:      Dan Cassidy
+ * Date:        2015-07-17
+ * Assignment:  HW4-1
+ * Source File: GameController.java
+ * Language:    Java
+ * Course:      CSCI-C 490, Android Programming, MoWe 08:00
+--------------------------------------------------------------------------------------------------*/
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+/**
+ * 
+ * 
+ * @author Dan Cassidy
+ */
+public class GameController
+{
+    private Game theGame;
+    private GameView theView;
+    
+    /**
+     * 3-parameter constructor.
+     * 
+     * @param numRows
+     * @param numColumns
+     * @param winLength
+     */
+    public GameController(int numRows, int numColumns, int winLength)
+    {
+        // Set up the model and the view.  
+        theGame = new Game(numRows, numColumns, winLength);
+        theView = new GameView(theGame.getRows(), theGame.getColumns());
+        theView.setWinningConditionsLabelText(theGame.getWinLength() + " in a row wins");
+        theView.setStatusLabelText(statusHelper());
+        
+        // Add listeners to the view.
+        theView.addResetButtonActionListener(new ActionListener()
+        {
+            public void actionPerformed(ActionEvent evt)
+            {
+                theGame.reset();
+                theView.reset();
+                theView.setStatusLabelText(statusHelper());
+            }
+        });
+        theView.addBoardButtonActionListener(new ActionListener()
+        {
+            public void actionPerformed(ActionEvent event)
+            {
+                int row = Integer.parseInt(event.getActionCommand()) / theGame.getColumns();
+                int column = Integer.parseInt(event.getActionCommand()) % theGame.getColumns();
+                
+                theGame.playMove(row, column);
+                theView.setBoardButtonText(row, column, theGame.getSpaceString(row, column));
+                theView.setStatusLabelText(statusHelper());
+            }
+        });
+    }
+    
+    /**
+     * Show the view.
+     */
+    public void showView()
+    {
+        theView.setVisible(true);
+    }
+
+    /**
+     * Helper method to interpret theGame's current status and put it into String form.
+     * 
+     * @return
+     */
+    private String statusHelper()
+    {
+        Game.Status status = theGame.getStatus();
+        
+        if (status == Game.Status.IN_PROGRESS)
+            return theGame.getTurn() + "'s Turn";
+        else if (status == Game.Status.X_WIN)
+            return "X Wins";
+        else if (status == Game.Status.O_WIN)
+            return "O Wins";
+        else if (status == Game.Status.DRAW)
+            return "Draw";
+        else
+            return "Unknown Status";
+        
+        if (theGame.getStatus() == Game.Status.IN_PROGRESS)
+            return theGame.getTurn() + "'s Turn";
+        else if (theGame.getStatus() == Game.Status.X_WIN)
+            return "X Wins";
+        else if (theGame.getStatus() == Game.Status.O_WIN)
+            return "O Wins";
+        else if (theGame.getStatus() == Game.Status.DRAW)
+            return "Draw";
+        else
+            return "Unknown Status";
+
+    }
+}

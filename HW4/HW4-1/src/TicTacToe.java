@@ -1,0 +1,48 @@
+/*--------------------------------------------------------------------------------------------------
+ * Author:      Dan Cassidy
+ * Date:        2015-07-18
+ * Assignment:  HW4-1
+ * Source File: TicTacToe.java
+ * Language:    Java
+ * Course:      CSCI-C 490, Android Programming, MoWe 08:00
+--------------------------------------------------------------------------------------------------*/
+
+/**
+ * Main class for the Tic-Tac-Toe game. Constructed using the MVC pattern.
+ * 
+ * @author Dan Cassidy
+ */
+public class TicTacToe
+{
+    /**
+     * Main entry point for the program.
+     * 
+     * @param args Command line arguments.
+     */
+    public static void main(String[] args)
+    {
+        int numRows = 0, numColumns = 0, winLength = 0;
+        
+        // Parse command line arguments, exiting if they aren't numbers.
+        try
+        {
+            if (args.length > 1)
+            {
+                numRows = Integer.parseInt(args[0]);
+                numColumns = Integer.parseInt(args[1]);
+                if (args.length > 2)
+                    winLength = Integer.parseInt(args[2]);
+            }
+            else if (args.length == 1)
+                winLength = Integer.parseInt(args[0]);
+        }
+        catch (NumberFormatException ex)
+        {
+            System.out.println("Command line arguments must be numbers.");
+            System.exit(1);
+        }
+        
+        GameController control = new GameController(numRows, numColumns, winLength);
+        control.showView();
+    }
+}

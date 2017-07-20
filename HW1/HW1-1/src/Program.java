@@ -1,0 +1,65 @@
+/*--------------------------------------------------------------------------------------------------
+ * Author:      Dan Cassidy
+ * Date:        2015-07-09
+ * Assignment:  HW1-1
+ * Source File: Program.java
+ * Language:    Java
+ * Course:      CSCI-C 490, Android Programming, MoWe 08:00
+--------------------------------------------------------------------------------------------------*/
+
+
+import java.util.Scanner;
+
+/**
+ * A small Java program to print out the first <i>n</i> (0 < <i>n</i> < 94) Fibonacci numbers.
+ * @author Dan Cassidy
+ */
+public class Program
+{
+	/**
+	 * Entry point into the Java program. 
+	 * @param args Command line arguments. <i>Not used.</i>
+	 * @return Nothing.
+	 */
+	public static void main(String[] args)
+	{
+		// Define min and max.
+		final byte NUM_MIN = 1;
+		final byte NUM_MAX = 93;
+		
+		// Give the user a small description.
+		System.out.println("Please enter the number of Fibonacci numbers to display. This should");
+		System.out.println("be a positive number up to and including 93.");
+
+		// Declare and prep variables for later use.
+		byte numFib = 0;
+		boolean validInput = false;
+		Scanner consoleInput = new Scanner(System.in);
+		
+		// Loop while the user does not provide valid input.
+		while (!validInput)
+		{
+			System.out.print("Choice: ");
+			try
+			{
+				// Get console input.
+				numFib = Byte.parseByte(consoleInput.nextLine());
+
+				// Check for valid input and throw an exception if invalid.
+				if (numFib < NUM_MIN || numFib > NUM_MAX)
+					throw new Exception();
+				else
+					validInput = true;
+			}
+			catch (Exception ex)
+			{
+				System.out.println("Please enter a valid number.");
+			}
+		}
+		
+		// Print the Fibonacci numbers.
+		System.out.println("First " + (numFib > 1 ? numFib + " " : "") + "Fibonacci Number" +
+				(numFib != 1 ? "s": "") + ":");
+		Fibonacci.calculateAndDisplay(numFib);
+	}
+}

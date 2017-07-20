@@ -1,0 +1,11 @@
+1436223824009	Rename local variable 'a'
+1436223839000	Rename local variable 'b'
+1436223884369	Rename local variable 'c'
+1436223947467	Rename local variable 'n'
+1436224031207	Rename method 'CalculateAndDisplay'
+1436224040181	Rename method 'Display'
+1436226126654	Rename type 'Program'
+1436228588438	Rename local variable 'numberOfFibonacciNums'
+1436231593573	Rename type 'Main'
+1436474235040	Move compilation units
+1436474379687	Delete element

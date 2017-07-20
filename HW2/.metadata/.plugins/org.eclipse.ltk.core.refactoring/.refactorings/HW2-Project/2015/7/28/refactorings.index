@@ -1,0 +1,11 @@
+1436399018251	Rename field 'areaOfResponsibility'
+1436399037735	Rename field 'immediateSupervisor'
+1436399085081	Rename method 'getImmediateSupervisor'
+1436399113174	Rename method 'setImmediateSupervisor'
+1436399133198	Rename local variable 'areaOfResponsibility'
+1436399164235	Rename local variable 'immediateSupervisor'
+1436399171734	Rename local variable 'areaOfResponsibility'
+1436399186782	Rename local variable 'immediateSupervisor'
+1436473231246	Move compilation unit
+1436473250235	Move compilation units
+1436473261984	Delete element

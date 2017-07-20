@@ -1,0 +1,16 @@
+public class TicTacToe
+{
+    public static void main(String[] args)
+    {
+        GameController control = new GameController(5, 5, 5);
+        control.showView();
+        
+//        Game theGame = new Game(4,4,3);
+//        theGame.playMove(0, 0); theGame.printBoard();
+//        theGame.playMove(1, 0); theGame.printBoard();
+//        theGame.playMove(0, 1); theGame.printBoard();
+//        theGame.playMove(2, 1); theGame.printBoard();
+//        theGame.playMove(0, 2); theGame.printBoard();
+        
+    }
+}

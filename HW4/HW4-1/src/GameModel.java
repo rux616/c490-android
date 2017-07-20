@@ -1,0 +1,259 @@
+/*--------------------------------------------------------------------------------------------------
+ * Author:      Dan Cassidy
+ * Date:        2015-07-18
+ * Assignment:  HW4-1
+ * Source File: Game.java
+ * Language:    Java
+ * Course:      CSCI-C 490, Android Programming, MoWe 08:00
+--------------------------------------------------------------------------------------------------*/
+
+/**
+ * Model for the Tic-Tac-Toe game.
+ * 
+ * Can scale to an arbitrary board size and use an arbitrary winning sequence length. 
+ * 
+ * @author Dan Cassidy
+ */
+public class GameModel
+{
+    public static enum Mark { X, O }
+    public static enum Status { IN_PROGRESS, X_WIN, O_WIN, DRAW }
+    
+    private static final int DEFAULT_NUM_ROWS = 3;
+    private static final int DEFAULT_NUM_COLUMNS = 3;
+    private static final int DEFAULT_WIN_LENGTH = 3;
+    
+    private final int NUM_ROWS;
+    private final int NUM_COLUMNS;
+    private final int WIN_LENGTH;
+    private final int MAX_SPACES;
+    
+    private Mark[][] board;
+    private Mark turn;
+    private Status status;
+    private int usedSpaces;
+    
+    /**
+     * Default constructor. Simply calls the 3-parameter constructor with the default values.
+     */
+    public GameModel()
+    {
+        this(DEFAULT_NUM_ROWS, DEFAULT_NUM_COLUMNS, DEFAULT_WIN_LENGTH);
+    }
+    
+    /**
+     * 3-parameter constructor. If there is a problem with an argument, the default value is used.
+     * 
+     * @param rows The number of rows on the game board. Should be >= 3.
+     * @param columns The number of columns on the game board. Should be >= 3.
+     * @param winLength The length of the sequence required to win. Should be >= 3 and <= the
+     * smaller of the number of rows and the number of columns.
+     */
+    public GameModel(int rows, int columns, int winLength)
+    {
+        NUM_ROWS = (rows < DEFAULT_NUM_ROWS ? DEFAULT_NUM_ROWS : rows);
+        NUM_COLUMNS = (columns < DEFAULT_NUM_COLUMNS ? DEFAULT_NUM_COLUMNS : columns);
+        MAX_SPACES = NUM_ROWS * NUM_COLUMNS;
+        if (    winLength < DEFAULT_WIN_LENGTH || 
+                winLength > (NUM_ROWS > NUM_COLUMNS ? NUM_COLUMNS : NUM_ROWS))
+            WIN_LENGTH = DEFAULT_WIN_LENGTH;
+        else
+            WIN_LENGTH = winLength;
+        reset();
+    }
+    
+    // BEGIN GETTERS AND SETTERS -->
+    public int getColumns()
+    {
+        return NUM_COLUMNS;
+    }
+    
+    public int getRows()
+    {
+        return NUM_ROWS;
+    }
+    
+    public String getSpaceString(int row, int column)
+    {
+        if (!validCoords(row, column) || board[row][column] == null)
+            return "";
+        else
+            return board[row][column].toString();
+    }
+
+    public Status getStatus()
+    {
+        return status;
+    }
+    
+    public String getStatusString()
+    {
+        switch (status)
+        {
+            case IN_PROGRESS:
+                return turn + "'s Turn";
+            case X_WIN:
+                return "X Wins";
+            case O_WIN:
+                return "O Wins";
+            case DRAW:
+                return "Draw";
+            default:
+                return "Unknown Status";
+        }
+    }
+    
+    public Mark getTurn()
+    {
+        return turn;
+    }
+    
+    public int getWinLength()
+    {
+        return WIN_LENGTH;
+    }
+    // <-- END GETTERS AND SETTERS
+    
+    /**
+     * Play a single move at the given game board coordinates.
+     * 
+     * @param row The row where the mark should be placed.
+     * @param column The column where the mark should be placed.
+     */
+    public void playMove(int row, int column)
+    {
+        // If the game had ended, no more moves are accepted.
+        if (status != Status.IN_PROGRESS)
+            return;
+        
+        // Verify the row and column values.
+        if (!validCoords(row, column))
+            return;
+        
+        // Verify that the destination is empty.
+        if (board[row][column] == null)
+        {
+            usedSpaces++;
+            board[row][column] = turn;
+            
+            // Can't be a winning move until at least (WIN_LENGTH * 2 - 1) spaces have been used.
+            if (usedSpaces >= WIN_LENGTH * 2 - 1)
+                checkBoard();
+
+            turn = (turn == Mark.X ? Mark.O : Mark.X);
+        }
+    }
+    
+    /**
+     * Discards the old game board and creates a new one in its place and sets the turn to X, the
+     * game status to in progress, and the number of used spaces to 0.
+     */
+    public void reset()
+    {
+        board = new Mark[NUM_ROWS][NUM_COLUMNS];
+        turn = Mark.X;
+        status = Status.IN_PROGRESS;
+        usedSpaces = 0;
+    }
+    
+    /**
+     * Checks the game board to see if there is a winner or a draw.
+     */
+    private void checkBoard()
+    {
+        // Check for winning sequences.
+        if (checkWin())
+            status = (turn == Mark.X ? Status.X_WIN : Status.O_WIN);
+        // Check for a draw.
+        else if (usedSpaces == MAX_SPACES)
+            status = Status.DRAW;
+    }
+    
+    /**
+     * Check for a winning sequence recursively in a given 'direction'. Upon first entry into the
+     * method (<b>numSequential</b> = 1), this method does several things to avoid unnecessary
+     * recursions so it can scale well to an arbitrary board size and winning sequence length.
+     * <ul><li>It verifies that the final row/column aren't going to be outside the bounds of the
+     * board.</li>
+     * <li>It checks the neighboring space in the direction of travel to make sure it matches.</li>
+     * <li>It checks the final destination space (that is, the space that this method will look at
+     * if it reaches the WIN_LENGTH'th depth) to make sure it matches.</li></ul> 
+     * 
+     * @param row The row portion of the board space being looked at.
+     * @param column The column portion of the board space being looked at.
+     * @param rowStepOffset The row offset applied each step.
+     * @param columnStepOffset The column offset applied each step.
+     * @param numSequential The number of sequential marks found thus far.
+     * @return boolean, indicating whether a winning sequence has been found (true) or not (false).
+     */
+    private boolean checkSequence(int row, int column, int rowStepOffset, int columnStepOffset,
+            int numSequential)
+    {
+        // Perform initial checks. These are to cut down on the recursion that needs to happen.
+        if (numSequential == 1)
+        {
+            int finalRow = row + rowStepOffset * (WIN_LENGTH - 1);
+            int finalColumn = column + columnStepOffset * (WIN_LENGTH - 1);
+            
+            // Bounds check.
+            if (!validCoords(finalRow, finalColumn))
+                return false;
+                
+            // Neighbor check.
+            if (board[row + rowStepOffset][column + columnStepOffset] != turn)
+                return false;
+                
+            // Destination check.
+            if (board[finalRow][finalColumn] != turn)
+                return false;
+        }
+        
+        // Verify that the sequence continues to match.
+        if (board[row][column] != turn)
+            return false;
+        // Check to see if the sequence is of winning length.
+        else if (numSequential == WIN_LENGTH)
+            return true;
+        
+        // Move to the next spot in the sequence.
+        return checkSequence(row + rowStepOffset, column + columnStepOffset, rowStepOffset,
+                columnStepOffset, numSequential + 1);
+    }
+    
+    /**
+     * Checks for a winning sequence on the game board. Wrapper for the recursive checkSequence
+     * method.
+     * 
+     * @return boolean, indicating whether a winning sequence was found (true) or not (false).
+     */
+    private boolean checkWin()
+    {
+        boolean win = false;
+        
+        for (int row = 0; !win && row < NUM_ROWS; row++)
+            for (int column = 0; !win && column < NUM_COLUMNS; column++)
+                // Only need to check for a winning condition if the board space contains a mark
+                // that is the same as the current turn. E.g. - Only check for a winning condition
+                // if it is O's turn and the board contains an 'O' in the current space.
+                if (board[row][column] == turn)
+                    win =   checkSequence(row, column, 0, 1, 1) ||   // Right.
+                            checkSequence(row, column, 1, 0, 1) ||   // Down.
+                            checkSequence(row, column, 1, 1, 1) ||   // Diagonal down right.
+                            checkSequence(row, column, -1, 1, 1);    // Diagonal up right.
+
+        return win;
+    }
+    
+    /**
+     * Checks the given row and column values to make sure they are valid (within bounds) for the
+     * current game board.
+     * 
+     * @param row The row value to check.
+     * @param column The column value to check.
+     * @return boolean, indicating whether the given coordinates are valid (true) or not (false).
+     */
+    private boolean validCoords(int row, int column)
+    {
+        return row >= 0 && row < NUM_ROWS && column >= 0 && column < NUM_COLUMNS;
+    }
+}

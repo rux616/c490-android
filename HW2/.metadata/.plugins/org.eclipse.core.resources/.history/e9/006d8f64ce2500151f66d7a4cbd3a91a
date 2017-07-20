@@ -1,0 +1,89 @@
+package dc.c490.hw2_project;
+
+public class Administrator extends SalariedEmployee
+{
+	private String title = "None";
+	private String area = "None";
+	private String supervisorsName = "None";
+	
+	public Administrator()
+	{
+		// Nothing to do, defaults are set already.
+	}
+	
+	public Administrator(String theName, Date theDate, double theSalary, String title,
+			String area, String supervisorsName) throws Exception
+	{
+		super(theName, theDate, theSalary);
+		this.setTitle(title);
+		this.setArea(area);
+		this.setSupervisorsName(supervisorsName);
+	}
+	
+	public Administrator(Administrator originalObject) throws Exception
+	{
+		super(originalObject);
+		this.setTitle(originalObject.getTitle());
+		this.setArea(originalObject.getArea());
+		this.setSupervisorsName(originalObject.getSupervisorsName());
+	}
+	
+	// BEGIN GETTERS AND SETTERS -->
+	public String getArea()
+	{
+		return this.area;
+	}
+	
+	public void setArea(String area)
+	{
+		if (area == null)
+			throw new NullPointerException();
+		else
+			this.area = area;
+	}
+	
+	public String getSupervisorsName()
+	{
+		return this.supervisorsName;
+	}
+	
+	public void setSupervisorsName(String supervisorsName)
+	{
+		if (supervisorsName == null)
+			throw new NullPointerException();
+		else
+			this.supervisorsName = supervisorsName;
+	}
+	
+	public String getTitle()
+	{
+		return this.title;
+	}
+	
+	public void setTitle(String title)
+	{
+		if (title == null)
+			throw new NullPointerException();
+		else
+			this.title = title;
+	}
+	// <-- END GETTERS AND SETTERS
+	
+	public boolean equals(Administrator other)
+	{
+		if (other == null)
+			throw new NullPointerException();
+		else
+			return (super.equals(other) &&
+					this.getArea().equals(other.getArea()) &&
+					this.getSupervisorsName().equals(other.getSupervisorsName()) &&
+					this.getTitle().equals(other.getTitle()));
+	}
+	
+	public String toString()
+	{
+		return (super.toString() + "\n" +
+				this.getTitle() + " of " + this.getArea() + "\n" +
+				"Supervised by " + this.getSupervisorsName());
+	}
+}

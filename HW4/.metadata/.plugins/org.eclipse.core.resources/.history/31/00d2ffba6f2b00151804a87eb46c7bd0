@@ -1,0 +1,83 @@
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+import java.awt.GraphicsConfiguration;
+import java.awt.GridLayout;
+import java.awt.HeadlessException;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
+public class GameWindow extends JFrame
+{    
+//    public TicTacToe() throws HeadlessException
+//    {
+//        // TODO Auto-generated constructor stub
+//    }
+//    
+//    public TicTacToe(GraphicsConfiguration gc)
+//    {
+//        super(gc);
+//        // TODO Auto-generated constructor stub
+//    }
+//    
+//    public TicTacToe(String title) throws HeadlessException
+//    {
+//        super(title);
+//        // TODO Auto-generated constructor stub
+//    }
+//    
+//    public TicTacToe(String title, GraphicsConfiguration gc)
+//    {
+//        super(title, gc);
+//        // TODO Auto-generated constructor stub
+//    }
+    
+    public static void main(String[] args)
+    {
+        // TODO Auto-generated method stub
+        Game newGame = new Game();
+        newGame.playMove(0, 0);
+        newGame.playMove(1, 0);
+        newGame.playMove(1, 1);
+        newGame.playMove(2, 0);
+        newGame.playMove(2, 2);
+        newGame.printBoard();
+        System.out.println(newGame.getStatus());
+        GameView gui = new GameView(3, 3);
+        gui.pack();
+        gui.setVisible(true);
+    }
+    
+    private JLabel statusLabel;
+    private JButton[][] board;
+    
+    public GameWindow(int rows, int columns)
+    {
+        super("Tic Tac Toe");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        //setResizable(false);
+        setLayout(new BorderLayout());
+        
+        statusLabel = new JLabel();
+        add(statusLabel, BorderLayout.NORTH);
+        
+        int blah = 0;
+        JPanel test = new JPanel(new GridLayout(rows, columns));
+        board = new JButton[rows][columns];
+        for (JButton[] buttonRow : board)
+            for (JButton button : buttonRow)
+            {
+                button = new JButton("" + (++blah));
+                test.add(button);
+            }
+        
+        
+        add(test, BorderLayout.CENTER);
+        
+        
+        add(new JPanel(new FlowLayout()).add(new JButton("Reset")), BorderLayout.SOUTH);
+    }
+    
+}

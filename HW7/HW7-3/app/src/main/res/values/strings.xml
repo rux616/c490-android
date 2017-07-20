@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">TicTacToe</string>
+
+    <string name="button_reset">Reset</string>
+    <string name="button_x" translatable="false">X</string>
+    <string name="button_o" translatable="false">O</string>
+
+    <string name="winning_condition_text">3 in a row wins</string>
+
+    <string name="status_x_turn">X\'s Turn</string>
+    <string name="status_o_turn">O\'s Turn</string>
+    <string name="status_x_win">X Wins</string>
+    <string name="status_o_win">O Wins</string>
+    <string name="status_draw">Draw</string>
+    <string name="status_error">Error</string>
+
+    <string name="blank" translatable="false"/>
+</resources>
